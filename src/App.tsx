@@ -1,15 +1,19 @@
-import { Navbar } from './components/Navbar'
-import { Hero } from './components/Hero'
-import { CarsSection } from './components/CarsSection'
-import { Footer } from './components/Footer'
+import { Routes, Route } from "react-router-dom";
+import { Navbar } from "./components/Navbar/Navbar";
+import { Home } from "./pages/home/Home";
+import { Login } from "./pages/login/Login";
 
 export default function App() {
   return (
     <>
       <Navbar />
-      <Hero />
-      <CarsSection />
-      <Footer />
+
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+      </main>
     </>
-  )
+  );
 }
