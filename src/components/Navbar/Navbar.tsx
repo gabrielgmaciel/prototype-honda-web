@@ -1,10 +1,13 @@
+import { Link } from "react-router-dom";
 import styles from "./Navbar.module.css";
 
 export function Navbar() {
   return (
     <nav className={styles.navbar}>
       <div className={styles.left}>
-        <a href="#" className={styles.navLink}>Home</a>
+        <Link to="/" className={styles.navLink}>
+          Home
+        </Link>
       </div>
 
       <div className={styles.center}>
@@ -16,7 +19,9 @@ export function Navbar() {
       </div>
 
       <div className={styles.right}>
-        <a href="#" className={styles.login}>Login</a>
+        <Link to="/login" className={styles.login}>
+          Login
+        </Link>
       </div>
     </nav>
   );

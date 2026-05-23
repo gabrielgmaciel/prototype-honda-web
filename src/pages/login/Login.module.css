@@ -1,73 +1,135 @@
 .container {
+  display: flex;
   height: 100vh;
   width: 100%;
-  background: url("/images/login-image.jpg") center/cover no-repeat;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
-
-/* escurece o fundo pra dar contraste */
-.container::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.6);
-}
-
-/* caixa de login */
-.box {
-  position: relative;
-  z-index: 1;
-  width: 380px;
-  padding: 35px;
-  background: rgba(10, 10, 10, 0.85);
-  backdrop-filter: blur(10px);
-  border-radius: 14px;
+  background: #0b0b0b;
   color: white;
+}
+
+/* ESQUERDA (FORM) */
+.left {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  padding: 80px;
 }
 
-/* título */
-.box h1 {
-  font-size: 32px;
-  font-weight: 700;
+.left h1 {
+  font-size: 36px;
   margin-bottom: 10px;
-  text-align: center;
 }
 
-/* inputs */
-.box input {
-  padding: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+.left p {
+  opacity: 0.7;
+  margin-bottom: 40px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+
+  width: 100%;          /* ocupa o card todo */
+  align-items: center;  /* centraliza os elementos internos */
+}
+
+/* INPUT */
+.input {
+  width: 100%;
+  max-width: 300px;   /* evita encostar nas bordas feio */
+
+  padding: 14px;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.05);
+
+  border: 1px solid rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.05);
   color: white;
-  outline: none;
 }
 
-.box input::placeholder {
-  color: rgba(255, 255, 255, 0.6);
-}
+/* BOTÃO LOGIN */
+.loginBtn {
+  width: 100%;
+  max-width: 300px;
 
-/* botão */
-.box button {
-  margin-top: 10px;
-  padding: 12px;
+  padding: 14px;
   border: none;
   border-radius: 8px;
+
   background: white;
   color: black;
-  font-weight: 600;
+
   cursor: pointer;
-  transition: 0.3s;
+  font-weight: 600;
+
+  transition: 0.2s;
 }
 
-.box button:hover {
-  background: #c00;
+.loginBtn:hover {
+  transform: scale(1.02);
+}
+
+/* BOTÃO CADASTRO */
+.registerBtn {
+  width: 100%;
+  max-width: 300px;
+
+  padding: 14px;
+  border-radius: 8px;
+
+  border: 1px solid rgba(255,255,255,0.3);
+  background: transparent;
   color: white;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.registerBtn:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+/* ERRO */
+.error {
+  color: #ff4d4d;
+  font-size: 12px;
+}
+
+/* DIREITA (VISUAL) */
+.right {
+  flex: 1;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 80px;
+  background: url("/images/login-image.jpg") center/cover no-repeat;
+}
+
+.overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+}
+
+.right h2,
+.right p {
+  position: relative;
+  z-index: 1;
+}
+
+.right h2 {
+  font-size: 40px;
+}
+
+.right p {
+  opacity: 0.8;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
 }
