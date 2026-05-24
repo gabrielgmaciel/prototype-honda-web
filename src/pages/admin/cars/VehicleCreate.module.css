@@ -1,0 +1,412 @@
+/* src/pages/admin/cars/VehicleCreate.module.css */
+
+.container {
+  width: 100%;
+  padding: 30px;
+  background: #f6f6f6;
+}
+
+.header {
+  margin-bottom: 28px;
+}
+
+.pageTitle {
+  font-size: 32px;
+  font-weight: 700;
+  color: #111;
+  letter-spacing: -0.5px;
+  margin: 0;
+}
+
+/* FORM */
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+}
+
+/* SECTION */
+.section {
+  background: white;
+  border-radius: 28px;
+  padding: 28px;
+  border: 1px solid rgba(0,0,0,0.06);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+}
+
+.sectionTitle {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  color: #111;
+}
+
+/* =========================
+   BASIC LAYOUT
+========================= */
+
+.vehicleHeader {
+  display: flex;
+  gap: 28px;
+  align-items: flex-start;
+}
+
+.coverContainer {
+  flex-shrink: 0;
+}
+
+.coverWrapper {
+  position: relative;
+  width: 250px;
+  height: 250px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #f5f5f5;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.coverImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.emptyCover {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #777;
+}
+
+/* overlay cover */
+.coverOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  transition: 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.coverWrapper:hover .coverOverlay {
+  opacity: 1;
+}
+
+.editCoverButton {
+  border: none;
+  background: white;
+  color: black;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.vehicleInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+}
+
+.input {
+  width: 100%;
+  height: 52px;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 0 16px;
+  font-size: 15px;
+  outline: none;
+}
+
+.input:focus {
+  border-color: black;
+}
+
+/* TEXTAREA */
+.textarea {
+  width: 100%;
+  min-height: 140px;
+  border-radius: 18px;
+  border: 1px solid rgba(0,0,0,0.08);
+  padding: 16px;
+  font-size: 15px;
+  resize: vertical;
+  outline: none;
+}
+
+.textarea:focus {
+  border-color: black;
+}
+
+.descriptionContainer {
+  margin-top: 28px;
+}
+
+/* =========================
+   PRICE
+========================= */
+
+.priceInputWrapper {
+  height: 52px;
+  border-radius: 16px;
+  border: 1px solid rgba(0,0,0,0.08);
+  display: flex;
+  align-items: center;
+}
+
+.currency {
+  padding-left: 16px;
+  font-weight: 600;
+  color: #444;
+}
+
+.priceInput {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 0 16px 0 8px;
+  font-size: 15px;
+}
+
+/* =========================
+   BANNER
+========================= */
+
+.bannerPreview {
+  position: relative;
+  width: 100%;
+  height: 320px;
+  border-radius: 24px;
+  overflow: hidden;
+  background: #f5f5f5;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.bannerImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bannerOverlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  opacity: 0;
+  transition: 0.25s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.bannerPreview:hover .bannerOverlay {
+  opacity: 1;
+}
+
+.editBannerButton {
+  border: none;
+  background: white;
+  color: black;
+  padding: 12px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* =========================
+   IMAGES
+========================= */
+
+.imagesHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.imagesSubtitle {
+  font-size: 14px;
+  color: #777;
+  margin-top: 6px;
+}
+
+.uploadImagesButton {
+  border: none;
+  background: black;
+  color: white;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+/* SCROLL REAL FUNCIONANDO */
+.imagesGridWrapper {
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+.imagesGrid {
+  display: flex;
+  gap: 16px;
+  min-width: max-content;
+}
+
+.imagesGridWrapper::-webkit-scrollbar {
+  height: 10px;
+}
+
+.imagesGridWrapper::-webkit-scrollbar-track {
+  background: #eee;
+  border-radius: 999px;
+}
+
+.imagesGridWrapper::-webkit-scrollbar-thumb {
+  background: #bbb;
+  border-radius: 999px;
+}
+
+.galleryCard {
+  width: 170px;
+  height: 120px;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #f5f5f5;
+  border: 1px solid rgba(0,0,0,0.06);
+  flex: 0 0 auto;
+}
+
+.galleryImage {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* =========================
+   ITEMS
+========================= */
+
+.itemsHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.addItemButton {
+  border: none;
+  background: black;
+  color: white;
+  padding: 14px 18px;
+  border-radius: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.itemsGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.itemCard {
+  background: #fafafa;
+  border-radius: 20px;
+  padding: 22px;
+  border: 1px solid rgba(0,0,0,0.06);
+}
+
+.itemCardHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 18px;
+}
+
+.itemIndex {
+  font-weight: 700;
+}
+
+.removeItemButton {
+  background: #ffecec;
+  color: #d10000;
+  border: none;
+  padding: 10px 14px;
+  border-radius: 12px;
+  cursor: pointer;
+}
+
+/* =========================
+   SUBMIT BUTTON (FIX FINAL)
+========================= */
+
+.submitButton {
+  height: 58px;
+  border: none;
+  border-radius: 18px;
+  background: #e60023; /* vermelho moderno */
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.2s;
+
+  padding: 0 28px;
+}
+
+.submitButton:hover {
+  transform: translateY(-2px);
+  background: #cc001f;
+}
+
+.submitButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.submitWrapper {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 10px;
+}
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 1024px) {
+  .vehicleHeader {
+    flex-direction: column;
+  }
+
+  .coverWrapper {
+    width: 100%;
+    max-width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 20px;
+  }
+
+  .bannerPreview {
+    height: 220px;
+  }
+}

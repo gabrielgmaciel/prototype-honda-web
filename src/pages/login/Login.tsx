@@ -1,23 +1,32 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { loginRequest } from "../../services/auth";
+import { isAdmin } from "../../utils/auth";
 import styles from "./Login.module.css";
 
 export function Login() {
+  const navigate = useNavigate();
+
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [error, setError] = useState("");
+
+  const [loading, setLoading] = useState(false);
 
   function validateEmail(value: string) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
   }
 
-  function handleLogin(e: React.FormEvent) {
+  async function handleLogin(e: React.FormEvent) {
     e.preventDefault();
+    setError("");
 
     let hasError = false;
 
-    // EMAIL
+    // EMAIL VALIDATION
     if (!validateEmail(email)) {
       setEmailError("Digite um email válido");
       hasError = true;
@@ -25,7 +34,7 @@ export function Login() {
       setEmailError("");
     }
 
-    // SENHA
+    // PASSWORD VALIDATION
     if (password.length < 6) {
       setPasswordError("A senha deve ter pelo menos 6 caracteres");
       hasError = true;
@@ -35,7 +44,27 @@ export function Login() {
 
     if (hasError) return;
 
-    alert("Login realizado com sucesso!");
+    try {
+      setLoading(true);
+
+      // 🔥 chama API (retorna JWT string)
+      const token = await loginRequest(email, password);
+
+      // salva token
+      localStorage.setItem("token", token);
+
+      // 🔥 redirecionamento por role
+      if (isAdmin(token)) {
+        navigate("/admin");
+      } else {
+        navigate("/home");
+      }
+
+    } catch (err: any) {
+      setError(err.message || "Email ou senha inválidos");
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -47,10 +76,10 @@ export function Login() {
           <p>Faça login para continuar</p>
 
           <form onSubmit={handleLogin} className={styles.form}>
-            
+
             {/* EMAIL */}
             <input
-              type="text"   // 👈 evita mensagem em inglês do browser
+              type="text"
               placeholder="Email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -61,7 +90,7 @@ export function Login() {
               <span className={styles.error}>{emailError}</span>
             )}
 
-            {/* SENHA */}
+            {/* PASSWORD */}
             <input
               type="password"
               placeholder="Senha"
@@ -74,12 +103,26 @@ export function Login() {
               <span className={styles.error}>{passwordError}</span>
             )}
 
-            {/* BOTÕES */}
-            <button type="submit" className={styles.loginBtn}>
-              Entrar
+            {/* ERROR API */}
+            {error && (
+              <span className={styles.error}>{error}</span>
+            )}
+
+            {/* LOGIN BUTTON */}
+            <button
+              type="submit"
+              className={styles.loginBtn}
+              disabled={loading}
+            >
+              {loading ? "Entrando..." : "Entrar"}
             </button>
 
-            <button type="button" className={styles.registerBtn}>
+            {/* REGISTER BUTTON */}
+            <button
+              type="button"
+              className={styles.registerBtn}
+              onClick={() => navigate("/register")}
+            >
               Criar conta
             </button>
 

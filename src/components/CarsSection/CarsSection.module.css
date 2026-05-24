@@ -13,40 +13,53 @@
   letter-spacing: 1px;
 }
 
-/* GRID MAIS CONTROLADO */
+/* GRID CENTRALIZADO */
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  grid-template-columns: repeat(auto-fit, 200px);
+  justify-content: center;
   gap: 24px;
-  max-width: 900px;
-  margin: 0 auto;
 }
 
-/* CARD MENOR E MAIS LIMPO */
+/* CARD 200x250 */
 .card {
+  width: 250px;
+  height: 230px;
   background: rgba(255, 255, 255, 0.05);
-  border-radius: 12px;
+  border-radius: 14px;
   overflow: hidden;
   text-align: center;
-  padding-bottom: 12px;
-  transition: 0.3s;
+  transition: 0.25s;
+  cursor: default;
+
+  display: flex;
+  flex-direction: column;
 }
 
 .card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.08);
 }
 
-/* IMAGEM MENOR (AQUI É O PONTO PRINCIPAL) */
+/* IMAGEM OCUPA PARTE MAIOR */
 .card img {
   width: 100%;
-  height: 120px;   /* <<< reduz MUITO o tamanho */
+  height: 180px;
   object-fit: cover;
   display: block;
 }
 
-/* TEXTO DO CARRO */
+/* NOME ABAIXO */
 .card h3 {
-  font-size: 14px;
-  margin-top: 10px;
-  opacity: 0.9;
+  font-size: 16px;
+  font-weight: 600;
+  margin: auto 0;
+  padding: 10px;
+  opacity: 0.95;
+}
+
+/* LOADING */
+.loading {
+  text-align: center;
+  color: #aaa;
 }
