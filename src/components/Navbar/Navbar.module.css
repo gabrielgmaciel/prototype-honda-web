@@ -19,58 +19,200 @@
   z-index: 1000;
 }
 
-/* CENTRO */
 .center {
   justify-self: center;
 }
 
 .logo {
   height: 36px;
-  width: auto;
   filter: brightness(0) invert(1);
 }
 
-/* ESQUERDA */
 .left {
   justify-self: start;
-  display: flex;
-  gap: 24px;
-  align-items: center;
 }
 
-/* DIREITA */
 .right {
   justify-self: end;
-  display: flex;
-  gap: 24px;
-  align-items: center;
 }
 
-/* LINKS */
-.navLink {
+/* MENU */
+.menuButton {
+  width: 30px;
+  height: 22px;
+
+  background: none;
+  border: none;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+
+  cursor: pointer;
+}
+
+.menuButton span {
+  height: 2px;
+  background: white;
+  border-radius: 2px;
+}
+
+/* LOGIN */
+.login {
   color: white;
   text-decoration: none;
-  font-size: 14px;
-  letter-spacing: 1px;
-  opacity: 0.8;
-  transition: 0.2s;
-}
-
-.navLink:hover {
-  opacity: 1;
-}
-
-/* LOGIN BUTTON */
-.login {
   padding: 8px 14px;
   border-radius: 6px;
-
-  color: white;
-  text-decoration: none;
-  transition: 0.2s;
 }
 
 .login:hover {
   background: white;
   color: black;
+}
+
+/* OVERLAY */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.4);
+
+  opacity: 0;
+  pointer-events: none;
+  transition: 0.3s;
+  z-index: 1000;
+}
+
+.overlayOpen {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* SIDEBAR */
+.sidebar {
+  position: fixed;
+  top: 0;
+  left: -320px;
+
+  width: 320px;
+  height: 100vh;
+
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(16px);
+
+  padding: 24px;
+  padding-top: 90px;
+
+  box-sizing: border-box;
+
+  transition: 0.3s ease;
+  z-index: 1100;
+}
+
+.sidebarOpen {
+  left: 0;
+}
+
+/* HEADER */
+.sidebarHeader {
+  position: absolute;
+  top: 22px;
+  left: 50%;
+  transform: translateX(-50%);
+
+  font-size: 20px;
+  font-weight: 800;
+
+  letter-spacing: 6px; /* essência do estilo OEM */
+  text-transform: uppercase;
+
+  color: white;
+  opacity: 0.95;
+
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* LINKS */
+.sidebarLink {
+  display: block;
+  color: white;
+  text-decoration: none;
+
+  margin-bottom: 18px;
+  font-size: 15px;
+  opacity: 0.85;
+}
+
+.sidebarLink:hover {
+  opacity: 1;
+}
+
+/* TOGGLE LINHA ÚNICA */
+.vehiclesToggle {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  cursor: pointer;
+
+  color: white;
+  font-size: 15px;
+
+  margin-bottom: 12px;
+
+  opacity: 0.85;
+}
+
+.vehiclesToggle:hover {
+  opacity: 1;
+}
+
+/* LISTA */
+.carList {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  max-height: 0;
+  overflow: hidden;
+
+  transition: 0.3s ease;
+  margin-left: 12px;
+}
+
+.carListOpen {
+  max-height: 500px;
+}
+
+/* ITEM SEM BORDA (IMPORTANTE) */
+.carItem {
+  padding: 8px 0;
+
+  color: white;
+  font-size: 14px;
+
+  cursor: pointer;
+
+  opacity: 0.85;
+
+  transition: 0.2s;
+}
+
+.carItem:hover {
+  opacity: 1;
+  transform: translateX(4px);
+}
+
+.chevron {
+  display: inline-block;
+  margin-left: 6px;
+
+  font-size: 12px;
+  opacity: 0.8;
+
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+/* animação quando abre */
+.vehiclesToggle:hover .chevron {
+  opacity: 1;
 }
