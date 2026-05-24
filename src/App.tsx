@@ -6,6 +6,7 @@ import { VehicleCreate } from "./pages/admin/cars/VehicleCreate";
 import { CarsList } from "./pages/admin/cars/CarsList";
 import { AdminLayout } from "./layouts/admin/AdminLayout";
 import { VehicleView } from "./pages/vehicle/VehicleView";
+import { Register } from "./pages/register/Register";
 
 export default function App() {
   const location = useLocation();
@@ -22,6 +23,7 @@ export default function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/vehicle/view/:id" element={<VehicleView />} />
           {/* ADMIN */}
           <Route path="/admin" element={<AdminLayout />}>

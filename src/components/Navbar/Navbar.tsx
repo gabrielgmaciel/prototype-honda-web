@@ -68,13 +68,11 @@ export function Navbar() {
 
       </nav>
 
-      {/* overlay */}
       <div
         className={`${styles.overlay} ${open ? styles.overlayOpen : ""}`}
         onClick={() => setOpen(false)}
       />
 
-      {/* sidebar */}
       <aside className={`${styles.sidebar} ${open ? styles.sidebarOpen : ""}`}>
 
         <div className={styles.sidebarHeader}>Honda</div>
@@ -83,7 +81,6 @@ export function Navbar() {
           Home
         </Link>
 
-        {/* TOGGLE LINHA ÚNICA */}
         <div
           className={styles.vehiclesToggle}
           onClick={() => setVehiclesOpen(!vehiclesOpen)}
@@ -96,7 +93,6 @@ export function Navbar() {
           </span>
         </div>
 
-        {/* LISTA */}
         <div className={`${styles.carList} ${vehiclesOpen ? styles.carListOpen : ""}`}>
           {cars.map((car) => (
             <div
