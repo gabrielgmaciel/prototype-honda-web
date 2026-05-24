@@ -109,7 +109,7 @@ export function CarsList() {
       <div className={styles.footer}>
 
         <button
-          className={styles.addButton}
+          className={styles.addVehicleButton}
           onClick={() =>
             navigate("/admin/cars/create")
           }

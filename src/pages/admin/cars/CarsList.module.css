@@ -1,9 +1,8 @@
 .container {
   padding: 40px;
-
   background: #f5f5f5;
-
   min-height: 100vh;
+  box-sizing: border-box;
 }
 
 /* HEADER */
@@ -14,15 +13,12 @@
 
 .header h1 {
   font-size: 34px;
-
   color: #111;
-
   margin-bottom: 8px;
 }
 
 .header p {
   color: #666;
-
   font-size: 15px;
 }
 
@@ -30,27 +26,19 @@
 
 .grid {
   display: grid;
-
-  grid-template-columns:
-    repeat(4, 1fr);
-
+  grid-template-columns: repeat(auto-fit, minmax(220px, 250px));
   gap: 24px;
+  justify-content: center;
 }
 
 /* CARD */
 
 .card {
   background: white;
-
   border-radius: 18px;
-
   overflow: hidden;
-
   transition: 0.25s;
-
-  box-shadow:
-    0 4px 20px rgba(0,0,0,0.06);
-
+  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
   display: flex;
   flex-direction: column;
 }
@@ -109,21 +97,12 @@
 
 .editButton {
   width: 100%;
-
+  padding: 10px;
   border: none;
-
+  border-radius: 10px;
   background: #111;
   color: white;
-
-  padding: 12px;
-
-  border-radius: 10px;
-
   cursor: pointer;
-
-  font-weight: 600;
-
-  transition: 0.2s;
 }
 
 .editButton:hover {
@@ -142,21 +121,12 @@
 /* ADD BUTTON */
 
 .addButton {
+  padding: 12px 20px;
+  border-radius: 10px;
   border: none;
-
   background: black;
   color: white;
-
-  padding: 14px 26px;
-
-  border-radius: 12px;
-
-  font-size: 15px;
-  font-weight: 600;
-
   cursor: pointer;
-
-  transition: 0.2s;
 }
 
 .addButton:hover {
@@ -177,4 +147,41 @@
   color: #111;
 
   background: #f5f5f5;
+}
+
+.footer {
+  margin-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+/* BOTÃO 100% ISOLADO */
+.addVehicleButton {
+  all: unset; /* 🔥 remove QUALQUER estilo herdado */
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 14px 26px;
+  border-radius: 12px;
+
+  background: #000;
+  color: #fff;
+
+  font-size: 15px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+}
+
+.addVehicleButton:hover {
+  opacity: 0.85;
+  transform: translateY(-2px);
+}
+
+.addVehicleButton:active {
+  transform: translateY(0px);
 }
