@@ -1,6 +1,7 @@
 // src/pages/admin/cars/components/CarsSection.tsx
 
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 import styles from "./CarsSection.module.css";
 
@@ -13,6 +14,7 @@ type Car = {
 export function CarsSection() {
   const [cars, setCars] = useState<Car[]>([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   async function loadCars() {
     try {
@@ -46,7 +48,7 @@ export function CarsSection() {
       ) : (
         <div className={styles.grid}>
           {cars.map((car) => (
-            <div key={car.id} className={styles.card}>
+            <div key={car.id} className={styles.card} onClick={() => navigate(`/vehicle/view/${car.id}`)}>
               <img src={car.cover} alt={car.name} />
               <h3>{car.name}</h3>
             </div>
