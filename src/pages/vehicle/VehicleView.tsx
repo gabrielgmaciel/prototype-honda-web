@@ -55,7 +55,15 @@ export function VehicleView() {
     }, [id]);
 
     if (loading || !car) {
-        return <div className={styles.loading}>Carregando...</div>;
+        return (
+            <div className={styles.loading}>
+                <div className={styles.loadingDots}>
+                    <span />
+                    <span />
+                    <span />
+                </div>
+            </div>
+        );
     }
 
     return (
@@ -117,11 +125,10 @@ export function VehicleView() {
                                         <img
                                             key={i}
                                             src={img}
-                                            className={`${styles.thumb} ${
-                                                i === activeImage
+                                            className={`${styles.thumb} ${i === activeImage
                                                     ? styles.activeThumb
                                                     : ""
-                                            }`}
+                                                }`}
                                             onClick={() => setActiveImage(i)}
                                         />
                                     ))}

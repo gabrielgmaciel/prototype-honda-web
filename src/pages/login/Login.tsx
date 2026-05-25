@@ -114,7 +114,15 @@ export function Login() {
               className={styles.loginBtn}
               disabled={loading}
             >
-              {loading ? "Entrando..." : "Entrar"}
+              {loading ? (
+                <div className={styles.loadingDots}>
+                  <span />
+                  <span />
+                  <span />
+                </div>
+              ) : (
+                "Entrar"
+              )}
             </button>
 
             {/* REGISTER BUTTON */}

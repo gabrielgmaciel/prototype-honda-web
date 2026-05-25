@@ -44,7 +44,13 @@ export function CarsSection() {
       <h2 className={styles.title}>Veículos</h2>
 
       {loading ? (
-        <div className={styles.loading}>Carregando...</div>
+        <div className={styles.loading}>
+          <div className={styles.loadingDots}>
+            <span />
+            <span />
+            <span />
+          </div>
+        </div>
       ) : (
         <div className={styles.grid}>
           {cars.map((car) => (
