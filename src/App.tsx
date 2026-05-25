@@ -7,6 +7,7 @@ import { CarsList } from "./pages/admin/cars/CarsList";
 import { AdminLayout } from "./layouts/admin/AdminLayout";
 import { VehicleView } from "./pages/vehicle/VehicleView";
 import { Register } from "./pages/register/Register";
+import { UserLayout } from "./layouts/user/UserLayout";
 
 export default function App() {
   const location = useLocation();
@@ -42,6 +43,10 @@ export default function App() {
               path="cars/edit/:id"
               element={<VehicleCreate />}
             />
+          </Route>
+          {/* USER */}
+          <Route path="/user" element={<UserLayout />}>
+
           </Route>
         </Routes>
       </main>

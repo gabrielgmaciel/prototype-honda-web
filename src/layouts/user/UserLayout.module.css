@@ -1,0 +1,167 @@
+/* src/layouts/UserLayout/UserLayout.module.css */
+
+.container {
+  display: flex;
+  min-height: 100vh;
+  background: #f5f5f5;
+}
+
+/* SIDEBAR */
+
+.sidebar {
+  width: 250px;
+  background: #000;
+
+  border-right:
+    1px solid rgba(255, 255, 255, 0.08);
+
+  padding: 30px 20px;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* USER */
+
+.userSection {
+  margin-bottom: 50px;
+}
+
+.userSection h2 {
+  color: white;
+  font-size: 24px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.userSection span {
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 14px;
+}
+
+/* NAV */
+
+.nav {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.nav button {
+  background: transparent;
+  border: none;
+
+  color: rgba(255, 255, 255, 0.75);
+
+  text-align: left;
+
+  padding: 14px 18px;
+
+  border-radius: 12px;
+
+  font-size: 15px;
+
+  cursor: pointer;
+  transition: 0.2s;
+
+  width: 100%;
+}
+
+.nav button:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: white;
+}
+
+/* MAIN */
+
+.main {
+  flex: 1;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
+
+  background: #f5f5f5;
+}
+
+/* TOPBAR */
+
+.topbar {
+  height: 64px;
+
+  background: white;
+
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+
+  align-items: center;
+
+  padding: 0 24px;
+
+  border-bottom:
+    1px solid rgba(0, 0, 0, 0.06);
+}
+
+/* LOGO */
+
+.logo {
+  height: 40px;
+  justify-self: center;
+}
+
+/* LOGOUT */
+
+.logoutButton {
+  justify-self: end;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  width: auto;
+
+  border: none;
+
+  background: #d60000;
+  color: white;
+
+  padding: 10px 18px;
+
+  border-radius: 10px;
+
+  cursor: pointer;
+
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.logoutButton:hover {
+  background: #b80000;
+}
+
+/* CONTENT */
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  background: #f5f5f5;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+  }
+
+  .topbar {
+    padding: 0 16px;
+  }
+}

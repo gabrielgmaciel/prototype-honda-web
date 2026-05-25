@@ -1,3 +1,5 @@
+/* src/components/Navbar/Navbar.module.css */
+
 .navbar {
   position: fixed;
   top: 0;
@@ -34,9 +36,13 @@
 
 .right {
   justify-self: end;
+  position: relative;
 }
 
-/* MENU */
+/* ========================================
+   MENU
+======================================== */
+
 .menuButton {
   width: 32px;
   height: 24px;
@@ -54,22 +60,36 @@
 }
 
 .menuButton span {
-  display: block;   /* 🔥 ESSENCIAL */
-  width: 100%;      /* 🔥 ESSENCIAL */
+  display: block;
+  width: 100%;
   height: 2px;
 
   background: white;
   border-radius: 2px;
-
-  opacity: 1;
 }
 
-/* LOGIN */
+/* ========================================
+   LOGIN
+======================================== */
+
 .login {
   color: white;
   text-decoration: none;
+
   padding: 8px 14px;
-  border-radius: 6px;
+  border-radius: 8px;
+
+  transition:
+    background 0.2s,
+    color 0.2s,
+    opacity 0.2s;
+
+  background: transparent;
+
+  outline: none;
+  border: none;
+
+  box-shadow: none;
 }
 
 .login:hover {
@@ -77,15 +97,315 @@
   color: black;
 }
 
-/* OVERLAY */
+.login:focus,
+.login:active,
+.login:focus-visible {
+  background: transparent;
+  color: white;
+  outline: none;
+  box-shadow: none;
+}
+
+/* ========================================
+   PROFILE
+======================================== */
+
+.profileWrapper {
+  position: relative;
+}
+
+.profileButton {
+  border: none;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
+.profileImage {
+  width: 42px;
+  height: 42px;
+
+  border-radius: 999px;
+  object-fit: cover;
+
+  border: 2px solid rgba(255,255,255,0.3);
+}
+
+/* ========================================
+   DROPDOWN
+======================================== */
+
+.profileDropdown {
+  position: absolute;
+  top: 58px;
+  right: 0;
+
+  width: 290px;
+
+  background: rgba(18,18,18,0.96);
+  backdrop-filter: blur(20px);
+
+  border-radius: 22px;
+
+  border: 1px solid rgba(255,255,255,0.08);
+
+  padding: 20px;
+
+  opacity: 0;
+  pointer-events: none;
+
+  transform: translateY(-10px);
+
+  transition: 0.2s ease;
+
+  box-shadow:
+    0 20px 40px rgba(0,0,0,0.35);
+
+  z-index: 1200;
+}
+
+.profileDropdownOpen {
+  opacity: 1;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+
+/* ========================================
+   PROFILE TOP
+======================================== */
+
+.profileTop {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.profileLargeImage {
+  width: 62px;
+  height: 62px;
+
+  border-radius: 999px;
+  object-fit: cover;
+}
+
+.profileInfo {
+  flex: 1;
+  overflow: hidden;
+}
+
+.profileInfo h3 {
+  margin: 0;
+
+  color: white;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.profileInfo span {
+  display: block;
+  margin-top: 4px;
+
+  color: rgba(255,255,255,0.6);
+  font-size: 13px;
+
+  word-break: break-word;
+}
+
+/* ========================================
+   DIVIDERS
+======================================== */
+
+.profileDivider {
+  width: 100%;
+  height: 1px;
+
+  background: rgba(255,255,255,0.08);
+
+  margin: 18px 0;
+
+  flex-shrink: 0;
+}
+
+.verticalDivider {
+  width: 1px;
+  height: 18px;
+
+  background: rgba(255,255,255,0.15);
+
+  flex-shrink: 0;
+}
+
+/* ========================================
+   ACTIONS
+======================================== */
+
+.profileActions {
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+/* ========================================
+   ACCOUNT BUTTON
+======================================== */
+
+.accountButton {
+  flex: 1;
+
+  height: 40px;
+  width: 48%;
+
+  border: none !important;
+  outline: none !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+  color: white;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+
+  gap: 10px;
+
+  padding: 0;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.accountButton:hover {
+  opacity: 0.8;
+}
+
+.gear {
+  font-size: 16px;
+}
+
+/* ========================================
+   ADMIN BUTTON
+======================================== */
+
+.adminButton {
+  margin-left: auto;
+
+  height: 40px;
+  width: 48%;
+
+  border: none !important;
+  outline: none !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+  color: #ffbf7a;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  text-align: right;
+
+  padding: 0;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  transition: 0.2s;
+}
+
+.adminButton:hover {
+  opacity: 0.8;
+}
+
+/* ========================================
+   LOGOUT
+======================================== */
+
+.logoutButton {
+  width: 100%;
+  height: 10px;
+
+  border: none !important;
+  outline: none !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+  color: #ff4d4d;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+
+  padding: 0;
+
+  text-align: center;
+}
+
+.logoutButtonUser {
+  margin-left: auto;
+
+  height: 40px;
+  width: 48%;
+
+  border: none !important;
+  outline: none !important;
+
+  background: transparent !important;
+
+  box-shadow: none !important;
+
+  color: #ff0000;
+
+  cursor: pointer;
+
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  text-align: right;
+
+  padding: 0;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  transition: 0.2s;
+}
+
+.logoutButton:hover {
+  opacity: 0.8;
+}
+
+/* ========================================
+   OVERLAY
+======================================== */
+
 .overlay {
   position: fixed;
   inset: 0;
+
   background: rgba(0,0,0,0.4);
 
   opacity: 0;
   pointer-events: none;
+
   transition: 0.3s;
+
   z-index: 1000;
 }
 
@@ -94,7 +414,10 @@
   pointer-events: auto;
 }
 
-/* SIDEBAR */
+/* ========================================
+   SIDEBAR
+======================================== */
+
 .sidebar {
   position: fixed;
   top: 0;
@@ -112,6 +435,7 @@
   box-sizing: border-box;
 
   transition: 0.3s ease;
+
   z-index: 1100;
 }
 
@@ -119,32 +443,39 @@
   left: 0;
 }
 
-/* HEADER */
+/* ========================================
+   SIDEBAR HEADER
+======================================== */
+
 .sidebarHeader {
   position: absolute;
   top: 22px;
   left: 50%;
+
   transform: translateX(-50%);
 
   font-size: 20px;
   font-weight: 800;
 
-  letter-spacing: 6px; /* essência do estilo OEM */
+  letter-spacing: 6px;
   text-transform: uppercase;
 
   color: white;
   opacity: 0.95;
-
-  font-family: Arial, Helvetica, sans-serif;
 }
 
-/* LINKS */
+/* ========================================
+   SIDEBAR LINKS
+======================================== */
+
 .sidebarLink {
   display: block;
+
   color: white;
   text-decoration: none;
 
   margin-bottom: 18px;
+
   font-size: 15px;
   opacity: 0.85;
 }
@@ -153,7 +484,10 @@
   opacity: 1;
 }
 
-/* TOGGLE LINHA ÚNICA */
+/* ========================================
+   VEHICLES TOGGLE
+======================================== */
+
 .vehiclesToggle {
   display: flex;
   justify-content: space-between;
@@ -173,7 +507,10 @@
   opacity: 1;
 }
 
-/* LISTA */
+/* ========================================
+   CAR LIST
+======================================== */
+
 .carList {
   display: flex;
   flex-direction: column;
@@ -183,6 +520,7 @@
   overflow: hidden;
 
   transition: 0.3s ease;
+
   margin-left: 12px;
 }
 
@@ -190,7 +528,6 @@
   max-height: 500px;
 }
 
-/* ITEM SEM BORDA (IMPORTANTE) */
 .carItem {
   padding: 8px 0;
 
@@ -211,15 +548,29 @@
 
 .chevron {
   display: inline-block;
+
   margin-left: 6px;
 
   font-size: 12px;
   opacity: 0.8;
-
-  transition: transform 0.2s ease, opacity 0.2s ease;
 }
 
-/* animação quando abre */
-.vehiclesToggle:hover .chevron {
-  opacity: 1;
+/* ========================================
+   RESPONSIVE
+======================================== */
+
+@media (max-width: 768px) {
+
+  .navbar {
+    padding: 0 20px;
+  }
+
+  .profileDropdown {
+    width: 260px;
+    right: -8px;
+  }
+
+  .sidebar {
+    width: 280px;
+  }
 }
