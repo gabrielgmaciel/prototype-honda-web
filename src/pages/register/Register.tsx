@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import styles from "./Register.module.css";
 
 type Address = {
@@ -23,6 +24,8 @@ export function Register() {
 
   const [loading, setLoading] = useState(false);
   const [loadingCep, setLoadingCep] = useState(false);
+
+  const navigate = useNavigate();
 
   /* =========================
      TELEFONE MASK
@@ -153,7 +156,7 @@ export function Register() {
         const uploadRes = await fetch(
           "http://localhost:8080/api/users/upload/image/profile",
           {
-            method: "POST",
+            method: "PUT",
             headers: {
               Authorization: `Bearer ${token}`
             },
@@ -167,6 +170,8 @@ export function Register() {
       }
 
       alert("Cadastro realizado com sucesso!");
+      window.dispatchEvent(new Event("auth_change"));
+      navigate("/");
 
     } catch (err) {
       console.error(err);
