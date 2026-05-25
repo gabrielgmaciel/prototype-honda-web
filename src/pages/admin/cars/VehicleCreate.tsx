@@ -31,17 +31,21 @@ export function VehicleCreate() {
   const [price, setPrice] = useState("");
   const [category, setCategory] = useState("");
 
+  // previews atuais
   const [coverPreview, setCoverPreview] = useState("");
   const [bannerPreview, setBannerPreview] = useState("");
 
+  // arquivos pendentes
+  const [pendingCover, setPendingCover] = useState<File | null>(null);
+  const [pendingBanner, setPendingBanner] = useState<File | null>(null);
+
   const [images, setImages] = useState<string[]>([]);
+  const [pendingImages, setPendingImages] = useState<File[]>([]);
+
   const [items, setItems] = useState<Item[]>([
     { label: "", description: "" }
   ]);
 
-  const [uploadingCover, setUploadingCover] = useState(false);
-  const [uploadingBanner, setUploadingBanner] = useState(false);
-  const [uploadingImages, setUploadingImages] = useState(false);
   const [loading, setLoading] = useState(false);
 
   /* =========================
@@ -97,6 +101,11 @@ export function VehicleCreate() {
           : [{ label: "", description: "" }]
       );
 
+      // limpa pendentes
+      setPendingCover(null);
+      setPendingBanner(null);
+      setPendingImages([]);
+
     } catch (err) {
       console.error(err);
     }
@@ -123,121 +132,68 @@ export function VehicleCreate() {
   }
 
   /* =========================
-     COVER UPLOAD
+     COVER LOCAL
   ========================== */
-  async function handleCoverUpload(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleCoverUpload(e: React.ChangeEvent<HTMLInputElement>) {
 
     const file = e.target.files?.[0];
-    if (!file || !id) return;
 
-    try {
+    if (!file) return;
 
-      setUploadingCover(true);
-
-      const token = localStorage.getItem("token");
-
-      const form = new FormData();
-      form.append("image", file);
-
-      await fetch(
-        `http://localhost:8080/api/cars/upload/cover?id=${id}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          body: form
-        }
-      );
-
-      await loadVehicle();
-
-    } finally {
-      setUploadingCover(false);
-    }
+    setPendingCover(file);
+    setCoverPreview(URL.createObjectURL(file));
   }
 
   /* =========================
-     BANNER UPLOAD
+     BANNER LOCAL
   ========================== */
-  async function handleBannerUpload(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleBannerUpload(e: React.ChangeEvent<HTMLInputElement>) {
 
     const file = e.target.files?.[0];
-    if (!file || !id) return;
 
-    try {
+    if (!file) return;
 
-      setUploadingBanner(true);
-
-      const token = localStorage.getItem("token");
-
-      const form = new FormData();
-      form.append("image", file);
-
-      await fetch(
-        `http://localhost:8080/api/cars/upload/banner?id=${id}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          body: form
-        }
-      );
-
-      await loadVehicle();
-
-    } finally {
-      setUploadingBanner(false);
-    }
+    setPendingBanner(file);
+    setBannerPreview(URL.createObjectURL(file));
   }
 
   /* =========================
-     IMAGES UPLOAD (MAX 11)
+     IMAGES LOCAL ONLY
   ========================== */
-  async function handleImagesUpload(e: React.ChangeEvent<HTMLInputElement>) {
+  function handleImagesUpload(e: React.ChangeEvent<HTMLInputElement>) {
 
     const files = e.target.files;
 
-    if (!files || !id) return;
+    if (!files) return;
 
     const selected = Array.from(files);
 
-    if (images.length + selected.length > 11) {
-      alert("Limite máximo de 11 imagens");
+    const total =
+      images.length +
+      pendingImages.length +
+      selected.length;
+
+    if (total > 9) {
+      alert("Limite máximo de 9 imagens");
       e.target.value = "";
       return;
     }
 
-    try {
+    setPendingImages(prev => [...prev, ...selected]);
 
-      setUploadingImages(true);
+    e.target.value = "";
+  }
 
-      const token = localStorage.getItem("token");
+  function removePendingImage(index: number) {
+    setPendingImages(prev =>
+      prev.filter((_, i) => i !== index)
+    );
+  }
 
-      const form = new FormData();
-
-      selected.forEach(file => {
-        form.append("images", file);
-      });
-
-      await fetch(
-        `http://localhost:8080/api/cars/upload/images?id=${id}`,
-        {
-          method: "POST",
-          headers: {
-            Authorization: `Bearer ${token}`
-          },
-          body: form
-        }
-      );
-
-      await loadVehicle();
-
-    } finally {
-      setUploadingImages(false);
-      e.target.value = "";
-    }
+  function removeExistingImage(index: number) {
+    setImages(prev =>
+      prev.filter((_, i) => i !== index)
+    );
   }
 
   /* =========================
@@ -255,11 +211,16 @@ export function VehicleCreate() {
   }
 
   function addItem() {
-    setItems([...items, { label: "", description: "" }]);
+    setItems([
+      ...items,
+      { label: "", description: "" }
+    ]);
   }
 
   function removeItem(index: number) {
-    setItems(items.filter((_, i) => i !== index));
+    setItems(
+      items.filter((_, i) => i !== index)
+    );
   }
 
   /* =========================
@@ -279,21 +240,98 @@ export function VehicleCreate() {
         price.replace(/\./g, "").replace(",", ".")
       );
 
-      await fetch("http://localhost:8080/api/cars", {
-        method: id ? "PUT" : "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          id,
-          name,
-          description,
-          price: numericPrice,
-          category,
-          itens: items
-        })
-      });
+      // 1. salva veículo
+      const res = await fetch(
+        "http://localhost:8080/api/cars",
+        {
+          method: id ? "PUT" : "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            id,
+            name,
+            description,
+            price: numericPrice,
+            category,
+            itens: items
+          })
+        }
+      );
+
+      if (!res.ok) return;
+
+      const saved = await res.json();
+
+      const carId = saved.id || id;
+
+      /* =========================
+         2. COVER
+      ========================== */
+      if (pendingCover) {
+
+        const form = new FormData();
+
+        form.append("image", pendingCover);
+
+        await fetch(
+          `http://localhost:8080/api/cars/upload/cover?id=${carId}`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            body: form
+          }
+        );
+      }
+
+      /* =========================
+         3. BANNER
+      ========================== */
+      if (pendingBanner) {
+
+        const form = new FormData();
+
+        form.append("image", pendingBanner);
+
+        await fetch(
+          `http://localhost:8080/api/cars/upload/banner?id=${carId}`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            body: form
+          }
+        );
+      }
+
+      /* =========================
+         4. GALERIA
+      ========================== */
+      const finalImages = [...pendingImages];
+
+      if (finalImages.length > 0) {
+
+        const form = new FormData();
+
+        finalImages.forEach((file) => {
+          form.append("images", file);
+        });
+
+        await fetch(
+          `http://localhost:8080/api/cars/upload/images?id=${carId}`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${token}`
+            },
+            body: form
+          }
+        );
+      }
 
       navigate("/admin/cars");
 
@@ -302,30 +340,78 @@ export function VehicleCreate() {
     }
   }
 
-  /* =========================
-     UI
-  ========================== */
+  async function handleDelete() {
+
+    if (!id) return;
+
+    const confirmed = window.confirm(
+      "Deseja realmente deletar este veículo?"
+    );
+
+    if (!confirmed) return;
+
+    try {
+
+      setLoading(true);
+
+      const token = localStorage.getItem("token");
+
+      const res = await fetch(
+        `http://localhost:8080/api/cars?id=${id}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            accept: "*/*"
+          }
+        }
+      );
+
+      if (!res.ok) {
+        alert("Erro ao deletar veículo");
+        return;
+      }
+
+      navigate("/admin/cars");
+
+    } catch (err) {
+
+      console.error(err);
+      alert("Erro ao deletar veículo");
+
+    } finally {
+
+      setLoading(false);
+
+    }
+  }
+
   return (
     <div className={styles.container}>
 
-      {/* HEADER */}
       <div className={styles.header}>
         <h1 className={styles.pageTitle}>
           {id ? "Editar veículo" : "Novo veículo"}
         </h1>
       </div>
 
-      <form className={styles.form} onSubmit={handleSubmit}>
+      <form
+        className={styles.form}
+        onSubmit={handleSubmit}
+      >
 
         {/* BASIC */}
         <div className={styles.section}>
+
           <h2 className={styles.sectionTitle}>
             Dados Básicos
           </h2>
 
           <div className={styles.vehicleHeader}>
 
+            {/* COVER */}
             <div className={styles.coverContainer}>
+
               <div className={styles.coverWrapper}>
 
                 {coverPreview ? (
@@ -347,7 +433,7 @@ export function VehicleCreate() {
                       coverInputRef.current?.click()
                     }
                   >
-                    {uploadingCover ? "Enviando..." : "Editar"}
+                    Editar
                   </button>
                 </div>
 
@@ -359,38 +445,57 @@ export function VehicleCreate() {
                 ref={coverInputRef}
                 onChange={handleCoverUpload}
               />
+
             </div>
 
+            {/* INFO */}
             <div className={styles.vehicleInfo}>
 
               <div className={styles.field}>
-                <label className={styles.label}>Nome</label>
+                <label className={styles.label}>
+                  Nome
+                </label>
+
                 <input
                   className={styles.input}
                   value={name}
-                  onChange={(e) => setName(e.target.value)}
+                  onChange={(e) =>
+                    setName(e.target.value)
+                  }
                 />
               </div>
 
               <div className={styles.field}>
-                <label className={styles.label}>Categoria</label>
+                <label className={styles.label}>
+                  Categoria
+                </label>
+
                 <input
                   className={styles.input}
                   value={category}
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={(e) =>
+                    setCategory(e.target.value)
+                  }
                 />
               </div>
 
               <div className={styles.field}>
-                <label className={styles.label}>Preço</label>
+                <label className={styles.label}>
+                  Preço
+                </label>
 
                 <div className={styles.priceInputWrapper}>
-                  <span className={styles.currency}>R$</span>
+                  <span className={styles.currency}>
+                    R$
+                  </span>
+
                   <input
                     className={styles.priceInput}
                     value={price}
                     onChange={(e) =>
-                      handlePriceChange(e.target.value)
+                      handlePriceChange(
+                        e.target.value
+                      )
                     }
                   />
                 </div>
@@ -401,7 +506,10 @@ export function VehicleCreate() {
           </div>
 
           <div className={styles.descriptionContainer}>
-            <label className={styles.label}>Descrição</label>
+            <label className={styles.label}>
+              Descrição
+            </label>
+
             <textarea
               className={styles.textarea}
               value={description}
@@ -410,13 +518,18 @@ export function VehicleCreate() {
               }
             />
           </div>
+
         </div>
 
         {/* BANNER */}
         <div className={styles.section}>
-          <h2 className={styles.sectionTitle}>Banner</h2>
+
+          <h2 className={styles.sectionTitle}>
+            Banner
+          </h2>
 
           <div className={styles.bannerPreview}>
+
             {bannerPreview && (
               <img
                 src={bannerPreview}
@@ -432,9 +545,10 @@ export function VehicleCreate() {
                   bannerInputRef.current?.click()
                 }
               >
-                {uploadingBanner ? "Enviando..." : "Editar"}
+                Editar
               </button>
             </div>
+
           </div>
 
           <input
@@ -443,22 +557,26 @@ export function VehicleCreate() {
             ref={bannerInputRef}
             onChange={handleBannerUpload}
           />
+
         </div>
 
         {/* IMAGES */}
         <div className={styles.section}>
+
           <div className={styles.imagesHeader}>
+
             <div>
               <h2 className={styles.sectionTitle}>
                 Galeria
               </h2>
+
               <p className={styles.imagesSubtitle}>
-                {images.length}/9 imagens
+                {images.length + pendingImages.length}/9 imagens
               </p>
             </div>
 
-            <label className={styles.uploadImagesButton}>
-              {uploadingImages ? "Enviando..." : "Adicionar"}
+            <label className={styles.addItemButton}>
+              Adicionar
 
               <input
                 type="file"
@@ -467,25 +585,72 @@ export function VehicleCreate() {
                 onChange={handleImagesUpload}
               />
             </label>
+
           </div>
 
           <div className={styles.imagesGridWrapper}>
+
             <div className={styles.imagesGrid}>
+
               {images.map((img, i) => (
-                <div key={i} className={styles.galleryCard}>
+                <div
+                  key={i}
+                  className={styles.galleryCard}
+                >
+
                   <img
                     src={img}
                     className={styles.galleryImage}
                   />
+
+                  <button
+                    type="button"
+                    className={styles.removeImageButton}
+                    onClick={() =>
+                      removeExistingImage(i)
+                    }
+                  >
+                    ×
+                  </button>
+
                 </div>
               ))}
+
+              {pendingImages.map((file, i) => (
+                <div
+                  key={i}
+                  className={styles.galleryCard}
+                >
+
+                  <img
+                    src={URL.createObjectURL(file)}
+                    className={styles.galleryImage}
+                  />
+
+                  <button
+                    type="button"
+                    className={styles.removeImageButton}
+                    onClick={() =>
+                      removePendingImage(i)
+                    }
+                  >
+                    ×
+                  </button>
+
+                </div>
+              ))}
+
             </div>
+
           </div>
+
         </div>
 
         {/* ITEMS */}
         <div className={styles.section}>
+
           <div className={styles.itemsHeader}>
+
             <h2 className={styles.sectionTitle}>
               Itens do veículo
             </h2>
@@ -497,12 +662,20 @@ export function VehicleCreate() {
             >
               Adicionar
             </button>
+
           </div>
 
           <div className={styles.itemsGrid}>
+
             {items.map((item, i) => (
-              <div key={i} className={styles.itemCard}>
+
+              <div
+                key={i}
+                className={styles.itemCard}
+              >
+
                 <div className={styles.itemCardHeader}>
+
                   <span className={styles.itemIndex}>
                     Item {i + 1}
                   </span>
@@ -514,44 +687,73 @@ export function VehicleCreate() {
                   >
                     Remover
                   </button>
+
                 </div>
 
                 <div className={styles.itemFields}>
+
                   <input
                     className={styles.input}
                     placeholder="Nome"
                     value={item.label}
                     onChange={(e) =>
-                      handleItemChange(i, "label", e.target.value)
+                      handleItemChange(
+                        i,
+                        "label",
+                        e.target.value
+                      )
                     }
                   />
 
-                  <input
-                    className={styles.input}
+                  <textarea
+                    className={styles.textarea}
                     placeholder="Descrição"
                     value={item.description}
                     onChange={(e) =>
-                      handleItemChange(i, "description", e.target.value)
+                      handleItemChange(
+                        i,
+                        "description",
+                        e.target.value
+                      )
                     }
                   />
+
                 </div>
+
               </div>
+
             ))}
+
           </div>
+
         </div>
 
-        {/* SAVE */}
-        <div className={styles.submitWrapper}>
+        <div className={styles.actionsWrapper}>
+
+          {id && (
+            <button
+              type="button"
+              className={styles.deleteButton}
+              onClick={handleDelete}
+            >
+              Deletar veículo
+            </button>
+          )}
+
           <button
             className={styles.submitButton}
             type="submit"
             disabled={loading}
           >
-            {loading ? "Salvando..." : "Salvar Alterações"}
+            {loading
+              ? "Salvando..."
+              : "Salvar Alterações"}
           </button>
+
         </div>
 
       </form>
+
     </div>
   );
 }
