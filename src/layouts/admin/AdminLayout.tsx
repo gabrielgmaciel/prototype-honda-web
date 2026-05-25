@@ -71,9 +71,21 @@ export function AdminLayout() {
         <nav className={styles.nav}>
 
           <button
+            onClick={() => navigate("/admin/dashboard")}
+          >
+            Dashboard
+          </button>
+
+          <button
             onClick={() => navigate("/admin/cars")}
           >
             Veículos
+          </button>
+
+          <button
+            onClick={() => navigate("/admin/users")}
+          >
+            Usuarios
           </button>
 
         </nav>
