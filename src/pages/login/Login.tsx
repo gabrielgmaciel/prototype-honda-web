@@ -52,6 +52,8 @@ export function Login() {
 
       // salva token
       localStorage.setItem("token", token);
+      window.dispatchEvent(new Event("auth_change"));
+      navigate("/");
 
       // 🔥 redirecionamento por role
       if (isAdmin(token)) {

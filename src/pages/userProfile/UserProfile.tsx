@@ -326,6 +326,13 @@ export function UserProfile() {
 
     async function handleSave() {
 
+        if (password !== confirmPassword) {
+
+            alert("As senhas não coincidem.");
+
+            return;
+        }
+
         try {
 
             setSaving(true);
@@ -337,10 +344,6 @@ export function UserProfile() {
                 removeImage
                     ? ""
                     : userData.imageProfile || "";
-
-            /* =========================
-               IMAGE UPLOAD / REMOVE
-            ========================== */
 
             if (selectedImage || removeImage) {
 
@@ -388,10 +391,6 @@ export function UserProfile() {
                         : uploadData.imageProfile || "";
             }
 
-            /* =========================
-               UPDATE USER
-            ========================== */
-
             const response =
                 await fetch(
                     "http://localhost:8080/api/users/update",
@@ -410,8 +409,7 @@ export function UserProfile() {
                             imageProfile,
                             email: userData.email,
                             name: userData.name,
-                            password:
-                                userData.password || "",
+                            password: password || "",
                             phone: userData.phone,
 
                             address: {
@@ -445,10 +443,6 @@ export function UserProfile() {
             }
 
             setShowModal(true);
-
-            /* =========================
-               RELOAD PAGE
-            ========================== */
 
             setTimeout(() => {
 

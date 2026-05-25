@@ -25,63 +25,91 @@ type UserData = {
 export function Navbar() {
 
   const [open, setOpen] = useState(false);
-  const [vehiclesOpen, setVehiclesOpen] = useState(false);
+
+  const [vehiclesOpen, setVehiclesOpen] =
+    useState(false);
 
   const [cars, setCars] = useState<Car[]>([]);
 
-  const [authenticated, setAuthenticated] = useState(false);
-  const [profileOpen, setProfileOpen] = useState(false);
+  const [authenticated, setAuthenticated] =
+    useState(false);
 
-  const [userData, setUserData] = useState<UserData>({
-    name: "Usuário",
-    email: ""
-  });
+  const [authLoading, setAuthLoading] =
+    useState(true);
 
-  const [isAdmin, setIsAdmin] = useState(false);
+  const [profileOpen, setProfileOpen] =
+    useState(false);
 
-  const profileRef = useRef<HTMLDivElement>(null);
+  const [userData, setUserData] =
+    useState<UserData>({
+      name: "Usuário",
+      email: ""
+    });
+
+  const [isAdmin, setIsAdmin] =
+    useState(false);
+
+  const profileRef =
+    useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
 
   /* =========================
      JWT
   ========================== */
+
   function parseJwt(token: string) {
 
     try {
 
-      const base64Url = token.split(".")[1];
+      const base64Url =
+        token.split(".")[1];
 
-      const base64 = base64Url
-        .replace(/-/g, "+")
-        .replace(/_/g, "/");
+      const base64 =
+        base64Url
+          .replace(/-/g, "+")
+          .replace(/_/g, "/");
 
-      return JSON.parse(window.atob(base64));
+      return JSON.parse(
+        window.atob(base64)
+      );
 
     } catch {
+
       return null;
     }
   }
 
-  function validateToken() {
+  async function validateToken() {
 
-    const token = localStorage.getItem("token");
+    const token =
+      localStorage.getItem("token");
 
     if (!token) {
+
       setAuthenticated(false);
       setIsAdmin(false);
-      return;
+      setAuthLoading(false);
+
+      return false;
     }
 
-    const decoded = parseJwt(token);
+    const decoded =
+      parseJwt(token);
 
     if (!decoded) {
+
+      localStorage.removeItem("token");
+
       setAuthenticated(false);
       setIsAdmin(false);
-      return;
+      setAuthLoading(false);
+
+      return false;
     }
 
-    const now = Date.now() / 1000;
+    const now =
+      Date.now() / 1000;
 
     if (decoded.exp < now) {
 
@@ -89,42 +117,51 @@ export function Navbar() {
 
       setAuthenticated(false);
       setIsAdmin(false);
+      setAuthLoading(false);
 
-      return;
+      return false;
     }
 
     setAuthenticated(true);
 
-    const roles = decoded.roles || [];
+    const roles =
+      decoded.roles || [];
 
     setIsAdmin(
       roles.includes("admin")
     );
+
+    return true;
   }
 
   /* =========================
      USER
   ========================== */
+
   async function loadUser() {
 
     try {
 
-      const token = localStorage.getItem("token");
+      const token =
+        localStorage.getItem("token");
 
       if (!token) return;
 
-      const response = await fetch(
-        "http://localhost:8080/api/users/data",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`
+      const response =
+        await fetch(
+          "http://localhost:8080/api/users/data",
+          {
+            headers: {
+              Authorization:
+                `Bearer ${token}`
+            }
           }
-        }
-      );
+        );
 
       if (!response.ok) return;
 
-      const data = await response.json();
+      const data =
+        await response.json();
 
       setUserData({
         name: data.name,
@@ -133,6 +170,7 @@ export function Navbar() {
       });
 
     } catch (error) {
+
       console.error(error);
     }
   }
@@ -140,39 +178,76 @@ export function Navbar() {
   /* =========================
      CARS
   ========================== */
+
   async function loadCars() {
 
     try {
 
-      const res = await fetch(
-        "http://localhost:8080/api/cars/all"
-      );
+      const res =
+        await fetch(
+          "http://localhost:8080/api/cars/all"
+        );
 
       if (!res.ok) return;
 
-      const data = await res.json();
+      const data =
+        await res.json();
 
       setCars(data);
 
     } catch (err) {
+
       console.error(err);
     }
   }
 
+  /* =========================
+     INIT
+  ========================== */
+
+  async function init() {
+    setAuthLoading(true);
+
+    const valid = await validateToken();
+    await loadCars();
+
+    if (valid) {
+      await loadUser();
+    } else {
+      setUserData({
+        name: "Usuário",
+        email: ""
+      });
+    }
+
+    setAuthLoading(false);
+  }
+
   useEffect(() => {
+    init();
+  }, []);
 
-    validateToken();
-    loadCars();
-    loadUser();
+  useEffect(() => {
+    function handleAuthChange() {
+      init();
+    }
 
+    window.addEventListener("auth_change", handleAuthChange);
+
+    return () => {
+      window.removeEventListener("auth_change", handleAuthChange);
+    };
   }, []);
 
   /* =========================
-     CLOSE MODAL
+     CLOSE DROPDOWN
   ========================== */
+
   useEffect(() => {
 
-    function handleClickOutside(event: MouseEvent) {
+    function handleClickOutside(
+      event: MouseEvent
+    ) {
 
       if (
         profileRef.current &&
@@ -180,6 +255,7 @@ export function Navbar() {
           event.target as Node
         )
       ) {
+
         setProfileOpen(false);
       }
     }
@@ -190,6 +266,7 @@ export function Navbar() {
     );
 
     return () => {
+
       document.removeEventListener(
         "mousedown",
         handleClickOutside
@@ -201,23 +278,30 @@ export function Navbar() {
   /* =========================
      NAVIGATE
   ========================== */
+
   function handleNavigate(id: string) {
 
     setOpen(false);
 
-    navigate(`/vehicle/view/${id}`);
+    navigate(
+      `/vehicle/view/${id}`
+    );
   }
 
   /* =========================
      LOGOUT
   ========================== */
+
   function handleLogout() {
 
     localStorage.removeItem("token");
 
     setAuthenticated(false);
+
     setProfileOpen(false);
+
     setOpen(false);
+
     setIsAdmin(false);
 
     window.location.href = "/";
@@ -228,22 +312,31 @@ export function Navbar() {
       <nav className={styles.navbar}>
 
         {/* LEFT */}
+
         <div className={styles.left}>
+
           <button
             className={styles.menuButton}
-            onClick={() => setOpen(!open)}
+            onClick={() =>
+              setOpen(!open)
+            }
           >
             <span />
             <span />
             <span />
           </button>
+
         </div>
 
         {/* CENTER */}
+
         <div className={styles.center}>
+
           <Link
             to="/"
-            onClick={() => setOpen(false)}
+            onClick={() =>
+              setOpen(false)
+            }
           >
             <img
               src="/icons/honda-logo.svg"
@@ -251,12 +344,26 @@ export function Navbar() {
               alt="Logo"
             />
           </Link>
+
         </div>
 
         {/* RIGHT */}
+
         <div className={styles.right}>
 
-          {!authenticated ? (
+          {authLoading ? (
+
+            <div className={styles.navLoading}>
+
+              <div className={styles.loadingDots}>
+                <span />
+                <span />
+                <span />
+              </div>
+
+            </div>
+
+          ) : !authenticated ? (
 
             <Link
               to="/login"
@@ -275,7 +382,9 @@ export function Navbar() {
               <button
                 className={styles.profileButton}
                 onClick={() =>
-                  setProfileOpen(!profileOpen)
+                  setProfileOpen(
+                    !profileOpen
+                  )
                 }
               >
                 <img
@@ -283,7 +392,9 @@ export function Navbar() {
                     userData.image ||
                     "/icons/profile-icon.jpg"
                   }
-                  className={styles.profileImage}
+                  className={
+                    styles.profileImage
+                  }
                   alt="Perfil"
                 />
               </button>
@@ -295,7 +406,6 @@ export function Navbar() {
                   }`}
               >
 
-                {/* TOP */}
                 <div className={styles.profileTop}>
 
                   <img
@@ -303,11 +413,14 @@ export function Navbar() {
                       userData.image ||
                       "/icons/profile-icon.jpg"
                     }
-                    className={styles.profileLargeImage}
+                    className={
+                      styles.profileLargeImage
+                    }
                     alt="Perfil"
                   />
 
                   <div className={styles.profileInfo}>
+
                     <h3>
                       {userData.name}
                     </h3>
@@ -315,56 +428,90 @@ export function Navbar() {
                     <span>
                       {userData.email}
                     </span>
+
                   </div>
 
                 </div>
 
-                {/* DIVIDER */}
-                <div className={styles.profileDivider} />
+                <div
+                  className={
+                    styles.profileDivider
+                  }
+                />
 
-                {/* ACTIONS */}
-                <div className={styles.profileActions}>
+                <div
+                  className={
+                    styles.profileActions
+                  }
+                >
 
                   <button
-                    className={styles.accountButton}
+                    className={
+                      styles.accountButton
+                    }
                     onClick={() => {
+
                       setProfileOpen(false);
+
                       navigate("/profile");
                     }}
                   >
-                    <span className={styles.gear}>⚙</span>
+                    <span className={styles.gear}>
+                      ⚙
+                    </span>
+
                     Conta
                   </button>
 
-                  <div className={styles.verticalDivider} />
+                  <div
+                    className={
+                      styles.verticalDivider
+                    }
+                  />
 
                   {isAdmin ? (
+
                     <button
-                      className={styles.adminButton}
+                      className={
+                        styles.adminButton
+                      }
                       onClick={() => {
+
                         setProfileOpen(false);
+
                         navigate("/admin");
                       }}
                     >
                       Admin
                     </button>
+
                   ) : (
+
                     <button
-                      className={styles.logoutButtonUser}
+                      className={
+                        styles.logoutButtonUser
+                      }
                       onClick={handleLogout}
                     >
                       Sair
                     </button>
+
                   )}
 
                 </div>
 
                 {isAdmin && (
                   <>
-                    <div className={styles.profileDivider} />
+                    <div
+                      className={
+                        styles.profileDivider
+                      }
+                    />
 
                     <button
-                      className={styles.logoutButton}
+                      className={
+                        styles.logoutButton
+                      }
                       onClick={handleLogout}
                     >
                       Sair
@@ -383,15 +530,23 @@ export function Navbar() {
       </nav>
 
       {/* OVERLAY */}
+
       <div
-        className={`${styles.overlay} ${open ? styles.overlayOpen : ""
+        className={`${styles.overlay} ${open
+          ? styles.overlayOpen
+          : ""
           }`}
-        onClick={() => setOpen(false)}
+        onClick={() =>
+          setOpen(false)
+        }
       />
 
       {/* SIDEBAR */}
+
       <aside
-        className={`${styles.sidebar} ${open ? styles.sidebarOpen : ""
+        className={`${styles.sidebar} ${open
+          ? styles.sidebarOpen
+          : ""
           }`}
       >
 
@@ -402,22 +557,34 @@ export function Navbar() {
         <Link
           to="/"
           className={styles.sidebarLink}
-          onClick={() => setOpen(false)}
+          onClick={() =>
+            setOpen(false)
+          }
         >
           Home
         </Link>
 
         <div
-          className={styles.vehiclesToggle}
+          className={
+            styles.vehiclesToggle
+          }
           onClick={() =>
-            setVehiclesOpen(!vehiclesOpen)
+            setVehiclesOpen(
+              !vehiclesOpen
+            )
           }
         >
           <span>
             Veículos{" "}
-            <span className={styles.chevron}>
-              {vehiclesOpen ? "▾" : "▸"}
+
+            <span
+              className={styles.chevron}
+            >
+              {vehiclesOpen
+                ? "▾"
+                : "▸"}
             </span>
+
           </span>
         </div>
 
@@ -429,6 +596,7 @@ export function Navbar() {
         >
 
           {cars.map((car) => (
+
             <div
               key={car.id}
               className={styles.carItem}
@@ -438,6 +606,7 @@ export function Navbar() {
             >
               {car.name}
             </div>
+
           ))}
 
         </div>
