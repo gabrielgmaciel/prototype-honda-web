@@ -1,0 +1,480 @@
+.container {
+  min-height: 100vh;
+
+  background:
+    linear-gradient(
+      to bottom,
+      #0f0f0f,
+      #151515
+    );
+
+  padding:
+    120px 24px 40px;
+
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  width: 100%;
+  max-width: 950px;
+
+  background:
+    rgba(255,255,255,0.04);
+
+  backdrop-filter: blur(18px);
+
+  border:
+    1px solid rgba(255,255,255,0.06);
+
+  border-radius: 28px;
+
+  padding: 40px;
+
+  box-sizing: border-box;
+
+  box-shadow:
+    0 20px 50px rgba(0,0,0,0.35);
+}
+
+.title {
+  color: white;
+
+  font-size: 34px;
+  font-weight: 700;
+
+  margin: 0 0 40px;
+
+  text-align: center;
+}
+
+/* PROFILE */
+
+.profileSection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  margin-bottom: 50px;
+}
+
+.profileImage {
+  width: 140px;
+  height: 140px;
+
+  border-radius: 999px;
+  object-fit: cover;
+
+  border:
+    3px solid rgba(255,255,255,0.1);
+
+  margin-bottom: 18px;
+}
+
+.removePhotoButton {
+  margin-top: 12px;
+
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #ff5c5c;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.removePhotoButton:hover {
+  opacity: 0.8;
+}
+
+.uploadButton {
+  margin-top: 28px;
+
+  height: 42px;
+
+  padding: 0 22px;
+
+  border-radius: 12px;
+
+  background:
+    rgba(255,255,255,0.08);
+
+  color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  font-size: 14px;
+  font-weight: 600;
+
+  transition: 0.2s;
+}
+
+.uploadButton:hover {
+  background:
+    rgba(255,255,255,0.12);
+}
+
+/* GRID */
+
+.grid {
+  display: grid;
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(260px, 1fr));
+
+  gap: 22px;
+
+  margin-bottom: 40px;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+}
+
+.field label {
+  color:
+    rgba(255,255,255,0.7);
+
+  font-size: 14px;
+
+  margin-bottom: 10px;
+}
+
+.field input {
+  height: 50px;
+
+  border: none;
+  outline: none;
+
+  border-radius: 14px;
+
+  background:
+    rgba(255,255,255,0.06);
+
+  color: white;
+
+  padding: 0 16px;
+
+  font-size: 15px;
+
+  transition: 0.2s;
+}
+
+.field input:focus {
+  background:
+    rgba(255,255,255,0.09);
+}
+
+/* SAVE */
+
+.saveWrapper {
+  width: 100%;
+
+  display: flex;
+  justify-content: center;
+}
+
+.saveButton {
+  width: 320px;
+  max-width: 100%;
+
+  height: 54px;
+
+  border: none;
+  outline: none;
+
+  border-radius: 16px;
+
+  background: #d60000;
+
+  color: white;
+
+  font-size: 15px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s;
+}
+
+.saveButton:hover {
+  background: #b80000;
+}
+
+.saveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* LOADING */
+
+.loading {
+  min-height: 100vh;
+
+  background: #111;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: white;
+
+  font-size: 18px;
+}
+
+/* GLOBAL LOADING */
+
+.globalLoadingOverlay {
+  position: fixed;
+  inset: 0;
+
+  background:
+    rgba(0,0,0,0.45);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 9999;
+
+  backdrop-filter: blur(2px);
+}
+
+.loadingDots {
+  display: flex;
+  gap: 10px;
+}
+
+.loadingDots span {
+  width: 12px;
+  height: 12px;
+
+  border-radius: 999px;
+
+  background: white;
+
+  animation:
+    loadingBounce 0.6s infinite alternate;
+}
+
+.loadingDots span:nth-child(2) {
+  animation-delay: 0.2s;
+}
+
+.loadingDots span:nth-child(3) {
+  animation-delay: 0.4s;
+}
+
+@keyframes loadingBounce {
+
+  from {
+    transform: translateY(0);
+    opacity: 0.4;
+  }
+
+  to {
+    transform: translateY(-8px);
+    opacity: 1;
+  }
+}
+
+/* MODAL */
+
+.modalOverlay {
+  position: fixed;
+  inset: 0;
+
+  background: rgba(0,0,0,0.55);
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 5000;
+}
+
+.modal {
+  width: 400px;
+  max-width: calc(100% - 32px);
+
+  background: #171717;
+
+  border:
+    1px solid rgba(255,255,255,0.08);
+
+  border-radius: 24px;
+
+  padding: 30px;
+
+  text-align: center;
+}
+
+.modal h2 {
+  color: white;
+
+  margin: 0 0 12px;
+}
+
+.modal p {
+  color:
+    rgba(255,255,255,0.65);
+
+  margin-bottom: 26px;
+}
+
+.modalButton {
+  width: 100%;
+  height: 48px;
+
+  border: none;
+  border-radius: 14px;
+
+  background: #d60000;
+
+  color: white;
+
+  font-weight: 700;
+
+  cursor: pointer;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 768px) {
+
+  .container {
+    padding:
+      100px 16px 30px;
+  }
+
+  .card {
+    padding: 24px;
+  }
+
+  .title {
+    font-size: 28px;
+  }
+
+  .profileImage {
+    width: 110px;
+    height: 110px;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .saveButton {
+    width: 100%;
+  }
+}
+
+.profileImageWrapper {
+  position: relative;
+
+  width: 140px;
+  height: 140px;
+
+  border-radius: 999px;
+
+  overflow: hidden;
+}
+
+.imageOverlay {
+  position: absolute;
+  inset: 0;
+
+  background:
+    rgba(0,0,0,0.65);
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  gap: 10px;
+
+  opacity: 0;
+
+  transition: 0.2s;
+}
+
+.profileImageWrapper:hover .imageOverlay {
+  opacity: 1;
+}
+
+.removeOverlayButton {
+  border: none;
+  outline: none;
+
+  background: transparent;
+
+  color: #ff6666;
+
+  cursor: pointer;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  transition: 0.2s;
+}
+
+.removeOverlayButton:hover {
+  opacity: 0.8;
+}
+
+/* =========================
+   LOADING DOTS
+========================= */
+
+.loadingDots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+}
+
+.loadingDots span {
+  width: 8px;
+  height: 8px;
+
+  border-radius: 999px;
+
+  background: white;
+
+  animation: bounce 0.8s infinite ease-in-out;
+}
+
+.loadingDots span:nth-child(2) {
+  animation-delay: 0.15s;
+}
+
+.loadingDots span:nth-child(3) {
+  animation-delay: 0.3s;
+}
+
+@keyframes bounce {
+
+  0%,
+  80%,
+  100% {
+    transform: scale(0.7);
+    opacity: 0.4;
+  }
+
+  40% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}

@@ -1,4 +1,4 @@
-import { Outlet, useNavigate } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 
 import styles from "./AdminLayout.module.css";
@@ -99,12 +99,15 @@ export function AdminLayout() {
         <header className={styles.topbar}>
 
           <div></div>
-
-          <img
-            src="/icons/honda-logo.svg"
-            alt="Honda"
-            className={styles.logo}
-          />
+          <Link
+            to="/"
+            onClick={() => setOpen(false)}
+          >
+            <img
+              src="/icons/honda-logo.svg"
+              alt="Honda"
+              className={styles.logo}
+            /></Link>
 
           <button
             className={styles.logoutButton}

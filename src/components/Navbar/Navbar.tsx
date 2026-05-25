@@ -329,7 +329,7 @@ export function Navbar() {
                     className={styles.accountButton}
                     onClick={() => {
                       setProfileOpen(false);
-                      navigate("/user");
+                      navigate("/profile");
                     }}
                   >
                     <span className={styles.gear}>⚙</span>

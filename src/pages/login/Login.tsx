@@ -55,9 +55,9 @@ export function Login() {
 
       // 🔥 redirecionamento por role
       if (isAdmin(token)) {
-        navigate("/admin");
+        navigate("/");
       } else {
-        navigate("/home");
+        navigate("/");
       }
 
     } catch (err: any) {
