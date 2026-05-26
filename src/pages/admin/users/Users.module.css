@@ -1,0 +1,461 @@
+.container {
+    padding: 24px;
+    background: #ffffff;
+    min-height: 100vh;
+}
+
+/* =========================
+   TITLE
+========================= */
+.title {
+    font-size: 26px;
+    font-weight: 700;
+    margin-bottom: 18px;
+    color: #111;
+}
+
+/* =========================
+   SEARCH CARD (GOOGLE STYLE)
+========================= */
+.searchCard {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    padding: 10px 14px;
+    border-radius: 999px;
+
+    background: #f3f4f6;
+    border: 1px solid #e5e7eb;
+
+    max-width: 100%;
+
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+
+    margin-bottom: 18px;
+    transition: box-shadow 0.2s ease;
+}
+
+.searchCard select {
+    border: none;
+    background: transparent;
+    outline: none;
+
+    font-size: 13px;
+    color: #333;
+    cursor: pointer;
+}
+
+.searchCard input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: transparent;
+
+    font-size: 14px;
+    color: #111;
+}
+
+.searchButton {
+  all: unset;
+
+  background: #1111112d !important;
+  color: #000000 !important;
+
+  height: 38px !important;
+  min-width: 95px !important;
+
+  padding: 0 18px !important;
+
+  border-radius: 999px !important;
+
+  font-size: 13px !important;
+  font-weight: 600 !important;
+
+  cursor: pointer !important;
+
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+
+  transition: all 0.2s ease !important;
+
+  flex-shrink: 0 !important;
+
+  box-shadow:
+    0 2px 6px rgba(0,0,0,0.12) !important;
+}
+
+.searchButton:hover {
+  background: #8b8b8b !important;
+
+  transform: translateY(-1px);
+
+  box-shadow:
+    0 8px 18px rgba(0,0,0,0.14) !important;
+}
+
+.searchButton:active {
+  transform: scale(0.98);
+}
+
+.searchCard:focus-within {
+  box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.05);
+}
+
+/* =========================
+   TABLE
+========================= */
+.tableWrapper {
+    overflow-x: auto;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+
+    background: #fff;
+    border-radius: 14px;
+    overflow: hidden;
+
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.table th {
+    background: #f9fafb;
+    color: #6b7280;
+
+    font-size: 12px;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+
+    text-align: left;
+    padding: 14px;
+
+    border-bottom: 1px solid #eee;
+}
+
+.table td {
+    padding: 14px;
+    border-bottom: 1px solid #f1f1f1;
+
+    color: #111;
+    font-size: 14px;
+}
+
+.table tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* =========================
+   AVATAR
+========================= */
+.avatar {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* =========================
+   ROLE BADGE
+========================= */
+.role {
+    display: inline-block;
+
+    background: #f3f4f6;
+    color: #111;
+
+    font-size: 11px;
+    padding: 4px 8px;
+    border-radius: 999px;
+
+    margin-right: 6px;
+}
+
+/* =========================
+   PAGINATION (FLOAT BOTTOM RIGHT)
+========================= */
+.pagination {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    gap: 4px;
+
+    margin-top: 16px;
+
+    padding: 8px 0;
+}
+
+.pagination button {
+    width: 32px;
+    height: 32px;
+
+    border: none;
+    background: transparent;
+
+    border-radius: 999px;
+
+    font-size: 13px;
+    font-weight: 500;
+
+    color: #444;
+
+    cursor: pointer;
+
+    transition: 0.2s ease;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.pagination button:hover {
+    background: #f3f4f6;
+}
+
+.activePage {
+    background: #111 !important;
+    color: #fff !important;
+}
+
+/* disable state */
+.pagination button:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+}
+
+.deleteIcon {
+    width: 16px;
+    height: 16px;
+
+    opacity: 0.8;
+
+    transition: 0.2s ease;
+}
+
+.deleteButton:hover .deleteIcon {
+    opacity: 1;
+    background: #fff0 !important;
+    transform: scale(1.1);
+}
+
+/* =========================
+   ROLE ACTIONS
+========================= */
+
+.rolesContainer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.accessButton {
+    position: relative;
+
+    width: 30px;
+    height: 30px;
+
+    border: none;
+    border-radius: 50%;
+
+    background: transparent;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s ease;
+}
+
+.accessButton:hover {
+    background: #f3f4f6;
+}
+
+.accessButton::after {
+    content: attr(title);
+
+    position: absolute;
+
+    bottom: 38px;
+    left: 50%;
+
+    transform: translateX(-50%);
+
+    background: #111;
+    color: white;
+
+    padding: 6px 10px;
+
+    border-radius: 8px;
+
+    font-size: 11px;
+    font-weight: 500;
+
+    white-space: nowrap;
+
+    opacity: 0;
+    pointer-events: none;
+
+    transition: 0.2s ease;
+}
+
+.accessButton:hover::after {
+    opacity: 1;
+}
+
+/* =========================
+   DELETE BUTTON
+========================= */
+
+.deleteButton {
+    border: none !important;
+    background: transparent !important;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: 0.2s ease;
+}
+
+.deleteButton:hover {
+    background: rgba(255, 0, 0, 0.08) !important;
+}
+
+.deleteIcon {
+    width: 16px;
+    height: 16px;
+
+    object-fit: contain;
+
+    transition: 0.2s ease;
+}
+
+.deleteButton:hover .deleteIcon {
+    transform: scale(1.1);
+}
+
+/* =========================
+   MODAL
+========================= */
+
+.modalOverlay {
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    backdrop-filter: blur(2px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9999;
+}
+
+.modal {
+    width: 360px;
+
+    background: white;
+
+    border-radius: 18px;
+
+    padding: 24px;
+
+    box-shadow:
+      0 20px 40px rgba(0,0,0,0.18);
+
+    animation: modalShow 0.18s ease;
+}
+
+.modal h3 {
+    margin: 0 0 10px;
+
+    color: #111;
+
+    font-size: 20px;
+}
+
+.modal p {
+    color: #555;
+
+    margin-bottom: 22px;
+
+    line-height: 1.4;
+}
+
+.modalButtons {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+}
+
+.cancelButton {
+    border: none;
+
+    background: #f3f4f6;
+
+    color: #111;
+
+    padding: 10px 16px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.cancelButton:hover {
+    background: #e5e7eb;
+}
+
+.confirmButton {
+    border: none;
+
+    background: #111;
+
+    color: white;
+
+    padding: 10px 16px;
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    font-weight: 600;
+
+    transition: 0.2s ease;
+}
+
+.confirmButton:hover {
+    background: #222;
+}
+
+@keyframes modalShow {
+    from {
+        opacity: 0;
+        transform: scale(0.96);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}

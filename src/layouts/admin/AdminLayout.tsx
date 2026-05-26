@@ -59,7 +59,7 @@ export function AdminLayout() {
         <div className={styles.userSection}>
 
           <h2>
-            Olá, {userName}
+            Olá, {userName?.split(" ")[0] || ""}
           </h2>
 
           <span>
@@ -69,6 +69,12 @@ export function AdminLayout() {
         </div>
 
         <nav className={styles.nav}>
+
+          <button
+            onClick={() => navigate("/")}
+          >
+            Home
+          </button>
 
           <button
             onClick={() => navigate("/admin/dashboard")}
