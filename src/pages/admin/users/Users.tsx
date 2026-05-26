@@ -312,8 +312,8 @@ export function Users() {
 
                           setModalText(
                             isAdmin
-                              ? "Deseja realmente tranformar esse usuário em admin?"
-                              : "Deseja realmente remover os acessos de admin desse usuário?"
+                              ? "Deseja realmente remover os acessos de admin desse usuário?"
+                              : "Deseja realmente tranformar esse usuário em admin?"
                           );
 
                           setConfirmAction(() => () =>
