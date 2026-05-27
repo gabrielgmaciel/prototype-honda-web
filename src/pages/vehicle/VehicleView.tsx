@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Footer } from "../../components/Footer/Footer";
+import { useNavigate } from "react-router-dom";
 import styles from "./VehicleView.module.css";
 
 type Item = {
@@ -26,6 +27,7 @@ export function VehicleView() {
     const [car, setCar] = useState<Car | null>(null);
     const [loading, setLoading] = useState(false);
     const [activeImage, setActiveImage] = useState(0);
+    const navigate = useNavigate();
 
     async function loadCar() {
         if (!id) return;
@@ -126,8 +128,8 @@ export function VehicleView() {
                                             key={i}
                                             src={img}
                                             className={`${styles.thumb} ${i === activeImage
-                                                    ? styles.activeThumb
-                                                    : ""
+                                                ? styles.activeThumb
+                                                : ""
                                                 }`}
                                             onClick={() => setActiveImage(i)}
                                         />
@@ -196,7 +198,9 @@ export function VehicleView() {
                                 </strong>
                             </div>
 
-                            <button className={styles.button}>
+                            <button
+                                className={styles.button}
+                                onClick={() => navigate(`/business/${car.id}`)}>
                                 Negociar
                             </button>
 

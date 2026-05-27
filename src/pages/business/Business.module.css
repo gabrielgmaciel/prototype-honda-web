@@ -1,0 +1,425 @@
+.page {
+    min-height: 100vh;
+
+    padding:
+        120px 28px 40px;
+
+    background:
+        radial-gradient(circle at top,
+            rgba(255,0,0,0.10) 0%,
+            rgba(15,15,15,1) 28%,
+            #050505 60%
+        );
+
+    color: white;
+
+    position: relative;
+
+    overflow-x: hidden;
+}
+
+/* glow fundo */
+
+.page::before {
+    content: "";
+
+    position: fixed;
+
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(255,0,0,0.08),
+            transparent 30%
+        ),
+        radial-gradient(
+            circle at 80% 0%,
+            rgba(255,255,255,0.04),
+            transparent 25%
+        );
+
+    pointer-events: none;
+
+    z-index: 0;
+}
+
+/* HEADER */
+
+.header {
+    position: relative;
+    z-index: 2;
+
+    margin-bottom: 28px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.header h1 {
+    margin: 0;
+
+    font-size: 34px;
+    font-weight: 900;
+
+    letter-spacing: -0.06em;
+
+    line-height: 1;
+}
+
+/* GRID */
+
+.grid {
+    position: relative;
+    z-index: 2;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fill, minmax(320px, 1fr));
+
+    gap: 22px;
+}
+
+/* CARD */
+
+.card {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 28px;
+
+    padding: 18px;
+
+    background:
+        linear-gradient(
+            180deg,
+            rgba(25,25,25,0.96) 0%,
+            rgba(10,10,10,0.98) 100%
+        );
+
+    border:
+        1px solid rgba(255,255,255,0.06);
+
+    backdrop-filter: blur(18px);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 18px;
+
+    transition:
+        transform 0.25s ease,
+        border-color 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+.card::before {
+    content: "";
+
+    position: absolute;
+
+    inset: 0;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(255,255,255,0.06),
+            transparent 30%
+        );
+
+    pointer-events: none;
+}
+
+.card:hover {
+    transform:
+        translateY(-6px)
+        scale(1.01);
+
+    border-color:
+        rgba(255,255,255,0.14);
+
+    box-shadow:
+        0 20px 60px rgba(0,0,0,0.55),
+        0 0 30px rgba(255,0,0,0.12);
+}
+
+/* TOPO */
+
+.top {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+}
+
+.image {
+    width: 64px;
+    height: 64px;
+
+    border-radius: 50px;
+
+    object-fit: cover;
+
+    background: #181818;
+
+    border:
+        1px solid rgba(255,255,255,0.08);
+
+    flex-shrink: 0;
+}
+
+.name {
+    font-size: 15px;
+    font-weight: 800;
+
+    letter-spacing: -0.02em;
+}
+
+.state {
+    margin-top: 6px;
+
+    font-size: 12px;
+
+    color: #999;
+}
+
+/* BOX VALORES */
+
+.valuesBox {
+    background:
+        linear-gradient(
+            180deg,
+            rgba(255,255,255,0.04),
+            rgba(255,255,255,0.02)
+        );
+
+    border:
+        1px solid rgba(255,255,255,0.06);
+
+    border-radius: 22px;
+
+    padding: 18px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 10px;
+}
+
+.installment {
+    font-size: 25px;
+    font-weight: 900;
+
+    letter-spacing: -0.07em;
+
+    line-height: 1;
+
+    color: white;
+}
+
+.installmentText {
+    font-size: 12px;
+
+    color: #9c9c9c;
+
+    line-height: 1.6;
+}
+
+.discountRow {
+    margin-top: 10px;
+    padding-top: 12px;
+
+    border-top:
+        1px solid rgba(255,255,255,0.06);
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 0px;
+
+    font-size: 12px;
+
+    color: #b0b0b0;
+}
+
+.discountRow strong {
+    color: #39ff88;
+
+    font-size: 14px;
+    font-weight: 800;
+}
+
+/* BOTÃO */
+
+.button {
+    width: 100%;
+
+    height: 52px;
+
+    border: none;
+
+    border-radius: 18px;
+
+    background:
+        linear-gradient(
+            135deg,
+            #ff0000 0%,
+            #8f0000 100%
+        );
+
+    color: white;
+
+    font-size: 13px;
+    font-weight: 800;
+
+    letter-spacing: 0.04em;
+
+    cursor: pointer;
+
+    transition:
+        transform 0.18s ease,
+        opacity 0.18s ease,
+        box-shadow 0.18s ease;
+}
+
+.button:hover {
+    transform:
+        translateY(-2px);
+
+    box-shadow:
+        0 10px 30px rgba(255,0,0,0.35);
+}
+
+/* CONTATO */
+
+.contactBox {
+    padding-top: 8px;
+
+    border-top:
+        1px solid rgba(255,255,255,0.06);
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 12px;
+
+    font-size: 12px;
+
+    color: #d0d0d0;
+}
+
+.contactBox div {
+    display: flex;
+    gap: 10px;
+
+    line-height: 1.5;
+}
+
+/* LOADING */
+
+.loadingCard {
+    min-height: 300px;
+
+    border-radius: 28px;
+
+    background:
+        rgba(255,255,255,0.02);
+
+    border:
+        1px dashed rgba(255,255,255,0.08);
+
+    backdrop-filter: blur(14px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* DOTS */
+
+.loadingDots,
+.loadingDotsCenter {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.loadingDots span,
+.loadingDotsCenter span {
+    width: 8px;
+    height: 8px;
+
+    border-radius: 999px;
+
+    background: white;
+
+    animation:
+        pulse 1s infinite ease-in-out;
+}
+
+.loadingDots span:nth-child(2),
+.loadingDotsCenter span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.loadingDots span:nth-child(3),
+.loadingDotsCenter span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes pulse {
+
+    0%, 80%, 100% {
+        opacity: 0.2;
+        transform: scale(0.7);
+    }
+
+    40% {
+        opacity: 1;
+        transform: scale(1.15);
+    }
+}
+
+/* RESPONSIVO */
+
+@media (max-width: 900px) {
+
+    .page {
+        padding:
+            110px 18px 24px;
+    }
+
+    .grid {
+        grid-template-columns:
+            repeat(auto-fill, minmax(280px, 1fr));
+    }
+
+    .header h1 {
+        font-size: 28px;
+    }
+}
+
+@media (max-width: 640px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        flex-direction: column;
+        align-items: flex-start;
+
+        gap: 14px;
+    }
+
+    .header h1 {
+        font-size: 24px;
+    }
+
+    .installment {
+        font-size: 28px;
+    }
+}
