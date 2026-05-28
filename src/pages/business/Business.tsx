@@ -36,15 +36,6 @@ function ProposalCard({ proposal }: ProposalCardProps) {
 
             <div className={styles.top}>
 
-                <img
-                    src={
-                        proposal.dealership.image ||
-                        "/images/imagem-concessionario.jpeg"
-                    }
-                    className={styles.image}
-                    alt={proposal.dealership.name}
-                />
-
                 <div>
 
                     <div className={styles.name}>
@@ -135,6 +126,7 @@ function ProposalCard({ proposal }: ProposalCardProps) {
 export function Business() {
 
     const { id } = useParams();
+    const hasFetched = useRef(false);
 
     const [proposals, setProposals] = useState<Proposal[]>([]);
     const [finished, setFinished] = useState(false);
@@ -143,6 +135,11 @@ export function Business() {
     useEffect(() => {
 
         if (!id) return;
+
+        if (hasFetched.current) return;
+        hasFetched.current = true;
+
+        const controller = new AbortController();
 
         async function connect() {
 
@@ -235,6 +232,10 @@ export function Business() {
         }
 
         connect();
+
+        return () => {
+            controller.abort();
+        };
 
     }, [id]);
 
