@@ -1,19 +1,14 @@
 .page {
+    position: relative;
+
     min-height: 100vh;
 
-    padding:
-        120px 28px 40px;
+    display: flex;
+    flex-direction: column;
 
-    background:
-        radial-gradient(circle at top,
-            rgba(255,0,0,0.10) 0%,
-            rgba(15,15,15,1) 28%,
-            #050505 60%
-        );
+    background: #0b0b0b;
 
     color: white;
-
-    position: relative;
 
     overflow-x: hidden;
 }
@@ -23,21 +18,21 @@
 .page::before {
     content: "";
 
-    position: fixed;
+    position: absolute;
 
     inset: 0;
 
     background:
-        radial-gradient(
-            circle at 20% 20%,
-            rgba(255,0,0,0.08),
-            transparent 30%
-        ),
-        radial-gradient(
-            circle at 80% 0%,
-            rgba(255,255,255,0.04),
-            transparent 25%
-        );
+        radial-gradient(circle at top,
+            rgba(255, 0, 0, 0.10) 0%,
+            rgba(15, 15, 15, 1) 28%,
+            transparent 60%),
+        radial-gradient(circle at 20% 20%,
+            rgba(255, 0, 0, 0.08),
+            transparent 30%),
+        radial-gradient(circle at 80% 0%,
+            rgba(255, 255, 255, 0.04),
+            transparent 25%);
 
     pointer-events: none;
 
@@ -94,14 +89,12 @@
     padding: 18px;
 
     background:
-        linear-gradient(
-            180deg,
-            rgba(25,25,25,0.96) 0%,
-            rgba(10,10,10,0.98) 100%
-        );
+        linear-gradient(180deg,
+            rgba(25, 25, 25, 0.96) 0%,
+            rgba(10, 10, 10, 0.98) 100%);
 
     border:
-        1px solid rgba(255,255,255,0.06);
+        1px solid rgba(255, 255, 255, 0.06);
 
     backdrop-filter: blur(18px);
 
@@ -124,26 +117,23 @@
     inset: 0;
 
     background:
-        linear-gradient(
-            135deg,
-            rgba(255,255,255,0.06),
-            transparent 30%
-        );
+        linear-gradient(135deg,
+            rgba(255, 255, 255, 0.06),
+            transparent 30%);
 
     pointer-events: none;
 }
 
 .card:hover {
     transform:
-        translateY(-6px)
-        scale(1.01);
+        translateY(-6px) scale(1.01);
 
     border-color:
-        rgba(255,255,255,0.14);
+        rgba(255, 255, 255, 0.14);
 
     box-shadow:
-        0 20px 60px rgba(0,0,0,0.55),
-        0 0 30px rgba(255,0,0,0.12);
+        0 20px 60px rgba(0, 0, 0, 0.55),
+        0 0 30px rgba(255, 0, 0, 0.12);
 }
 
 /* TOPO */
@@ -165,7 +155,7 @@
     background: #181818;
 
     border:
-        1px solid rgba(255,255,255,0.08);
+        1px solid rgba(255, 255, 255, 0.08);
 
     flex-shrink: 0;
 }
@@ -189,14 +179,12 @@
 
 .valuesBox {
     background:
-        linear-gradient(
-            180deg,
-            rgba(255,255,255,0.04),
-            rgba(255,255,255,0.02)
-        );
+        linear-gradient(180deg,
+            rgba(255, 255, 255, 0.04),
+            rgba(255, 255, 255, 0.02));
 
     border:
-        1px solid rgba(255,255,255,0.06);
+        1px solid rgba(255, 255, 255, 0.06);
 
     border-radius: 22px;
 
@@ -232,7 +220,7 @@
     padding-top: 12px;
 
     border-top:
-        1px solid rgba(255,255,255,0.06);
+        1px solid rgba(255, 255, 255, 0.06);
 
     display: flex;
     align-items: center;
@@ -264,11 +252,9 @@
     border-radius: 18px;
 
     background:
-        linear-gradient(
-            135deg,
+        linear-gradient(135deg,
             #ff0000 0%,
-            #8f0000 100%
-        );
+            #8f0000 100%);
 
     color: white;
 
@@ -290,7 +276,7 @@
         translateY(-2px);
 
     box-shadow:
-        0 10px 30px rgba(255,0,0,0.35);
+        0 10px 30px rgba(255, 0, 0, 0.35);
 }
 
 /* CONTATO */
@@ -299,7 +285,7 @@
     padding-top: 8px;
 
     border-top:
-        1px solid rgba(255,255,255,0.06);
+        1px solid rgba(255, 255, 255, 0.06);
 
     display: flex;
     flex-direction: column;
@@ -326,10 +312,10 @@
     border-radius: 28px;
 
     background:
-        rgba(255,255,255,0.02);
+        rgba(255, 255, 255, 0.02);
 
     border:
-        1px dashed rgba(255,255,255,0.08);
+        1px dashed rgba(255, 255, 255, 0.08);
 
     backdrop-filter: blur(14px);
 
@@ -372,7 +358,9 @@
 
 @keyframes pulse {
 
-    0%, 80%, 100% {
+    0%,
+    80%,
+    100% {
         opacity: 0.2;
         transform: scale(0.7);
     }
@@ -425,6 +413,13 @@
 }
 
 .pageCentered {
+    position: relative;
+    z-index: 1;
+
+    flex: 1;
+
+    width: 100%;
+
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -441,17 +436,15 @@
     border-radius: 26px;
     padding: 26px 28px;
 
-    background: linear-gradient(
-        180deg,
-        rgba(255,255,255,0.06),
-        rgba(10,10,10,0.95)
-    );
+    background: linear-gradient(180deg,
+            rgba(255, 255, 255, 0.06),
+            rgba(10, 10, 10, 0.95));
 
-    border: 1px solid rgba(255,255,255,0.08);
+    border: 1px solid rgba(255, 255, 255, 0.08);
 
     backdrop-filter: blur(18px);
 
-    box-shadow: 0 25px 80px rgba(0,0,0,0.45);
+    box-shadow: 0 25px 80px rgba(0, 0, 0, 0.45);
 
     display: flex;
     flex-direction: column;
@@ -477,8 +470,8 @@
     font-size: 12px;
     font-weight: 800;
 
-    background: rgba(255,0,0,0.15);
-    border: 1px solid rgba(255,0,0,0.35);
+    background: rgba(255, 0, 0, 0.15);
+    border: 1px solid rgba(255, 0, 0, 0.35);
     color: #ff4d4d;
 }
 
@@ -492,8 +485,8 @@
     padding: 14px;
     border-radius: 14px;
 
-    background: rgba(255,255,255,0.03);
-    border: 1px solid rgba(255,255,255,0.05);
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
 
     display: flex;
     flex-direction: column;
@@ -559,14 +552,12 @@
 
     height: 1px;
 
-    background: linear-gradient(
-        90deg,
-        transparent,
-        rgba(255,255,255,0.12),
-        rgba(255,0,0,0.25),
-        rgba(255,255,255,0.12),
-        transparent
-    );
+    background: linear-gradient(90deg,
+            transparent,
+            rgba(255, 255, 255, 0.12),
+            rgba(255, 0, 0, 0.25),
+            rgba(255, 255, 255, 0.12),
+            transparent);
 
     margin: 10px 0 30px;
 
@@ -586,11 +577,9 @@
 
     transform: translate(-50%, -50%);
 
-    background: radial-gradient(
-        circle,
-        rgba(255,0,0,0.25),
-        transparent 70%
-    );
+    background: radial-gradient(circle,
+            rgba(255, 0, 0, 0.25),
+            transparent 70%);
 
     filter: blur(6px);
 }

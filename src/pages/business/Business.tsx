@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import { Footer } from "../../components/Footer/Footer";
 import styles from "./Business.module.css";
 
 type Proposal = {
@@ -179,70 +180,73 @@ export function Business() {
     }, [id]);
 
     return (
-        <div className={styles.pageCentered}>
+        <div className={styles.page}>
+            <div className={styles.pageCentered}>
 
-            {/* CARD RESUMO */}
-            <div className={styles.summaryCard}>
+                {/* CARD RESUMO */}
+                <div className={styles.summaryCard}>
 
-                <div className={styles.summaryHeader}>
-                    <h2>Resumo da Cotação</h2>
+                    <div className={styles.summaryHeader}>
+                        <h2>Resumo da Cotação</h2>
 
-                    <span className={styles.summaryBadge}>
-                        {customer?.proposalCode || "Carregando..."}
-                    </span>
-                </div>
-
-                {customer && (
-                    <div className={styles.summaryGrid}>
-
-                        <div className={styles.summaryItem}>
-                            <label>Cliente</label>
-                            <p>{customer.customerName}</p>
-                        </div>
-
-                        <div className={styles.summaryItem}>
-                            <label>Veículo</label>
-                            <p>{customer.vehicleModelName}</p>
-                        </div>
-
-                        <div className={styles.summaryItem}>
-                            <label>Valor</label>
-                            <p>
-                                R$ {customer.vehiclePrice.toLocaleString("pt-BR")}
-                            </p>
-                        </div>
-
-                        <div className={styles.summaryItem}>
-                            <label>Cotação</label>
-                            <p>{formatDate(customer.createdAt)}</p>
-                        </div>
-
-                        <div className={styles.summaryItem}>
-                            <label>Validade</label>
-                            <p>{formatDate(customer.finishedAt)}</p>
-                        </div>
-
-                        <div className={styles.summaryItem}>
-                            <label>Status</label>
-                            <p className={styles.activeStatus}>Em andamento</p>
-                        </div>
-
+                        <span className={styles.summaryBadge}>
+                            {customer?.proposalCode || "Carregando..."}
+                        </span>
                     </div>
-                )}
-            </div>
 
-            {/* DIVISOR */}
-            <div className={styles.divider} />
+                    {customer && (
+                        <div className={styles.summaryGrid}>
 
-            {/* GRID PROPOSTAS */}
-            <div className={styles.proposalsWrapper}>
-                <div className={styles.proposalsGrid}>
-                    {proposals.map((proposal) => (
-                        <ProposalCard key={proposal.id} proposal={proposal} />
-                    ))}
+                            <div className={styles.summaryItem}>
+                                <label>Cliente</label>
+                                <p>{customer.customerName}</p>
+                            </div>
+
+                            <div className={styles.summaryItem}>
+                                <label>Veículo</label>
+                                <p>{customer.vehicleModelName}</p>
+                            </div>
+
+                            <div className={styles.summaryItem}>
+                                <label>Valor</label>
+                                <p>
+                                    R$ {customer.vehiclePrice.toLocaleString("pt-BR")}
+                                </p>
+                            </div>
+
+                            <div className={styles.summaryItem}>
+                                <label>Cotação</label>
+                                <p>{formatDate(customer.createdAt)}</p>
+                            </div>
+
+                            <div className={styles.summaryItem}>
+                                <label>Validade</label>
+                                <p>{formatDate(customer.finishedAt)}</p>
+                            </div>
+
+                            <div className={styles.summaryItem}>
+                                <label>Status</label>
+                                <p className={styles.activeStatus}>Em andamento</p>
+                            </div>
+
+                        </div>
+                    )}
                 </div>
-            </div>
 
+                {/* DIVISOR */}
+                <div className={styles.divider} />
+
+                {/* GRID PROPOSTAS */}
+                <div className={styles.proposalsWrapper}>
+                    <div className={styles.proposalsGrid}>
+                        {proposals.map((proposal) => (
+                            <ProposalCard key={proposal.id} proposal={proposal} />
+                        ))}
+                    </div>
+                </div>
+
+            </div>
+            <Footer />
         </div>
     );
 }
