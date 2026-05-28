@@ -200,7 +200,20 @@ export function VehicleView() {
 
                             <button
                                 className={styles.button}
-                                onClick={() => navigate(`/business/${car.id}`)}>
+                                onClick={() => {
+                                    const token = localStorage.getItem("token");
+
+                                    if (!token) {
+                                        navigate("/login", {
+                                            state: {
+                                                from: `/business/${car.id}`
+                                            }
+                                        });
+                                        return;
+                                    }
+
+                                    navigate(`/business/${car.id}`);
+                                }}>
                                 Negociar
                             </button>
 
