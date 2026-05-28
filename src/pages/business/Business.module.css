@@ -583,3 +583,76 @@
 
     filter: blur(6px);
 }
+
+/* OVERLAY INICIAL */
+
+.initialLoadingOverlay {
+    position: fixed;
+    inset: 0;
+
+    background: rgba(0,0,0,0.45);
+
+    backdrop-filter: blur(6px);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 9999;
+}
+
+/* MENSAGEM LOADING */
+
+.loadingMessage {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+
+    margin-top: -10px;
+
+    color: #d5d5d5;
+
+    font-size: 14px;
+    font-weight: 600;
+
+    letter-spacing: -0.01em;
+
+    animation: fadeMessage 0.3s ease;
+}
+
+.loadingDotsInline {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.loadingDotsInline span {
+    width: 5px;
+    height: 5px;
+
+    border-radius: 999px;
+
+    background: #ffffff;
+
+    animation: pulse 1s infinite ease-in-out;
+}
+
+.loadingDotsInline span:nth-child(2) {
+    animation-delay: 0.15s;
+}
+
+.loadingDotsInline span:nth-child(3) {
+    animation-delay: 0.3s;
+}
+
+@keyframes fadeMessage {
+    from {
+        opacity: 0;
+        transform: translateY(4px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0px);
+    }
+}
