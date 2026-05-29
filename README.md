@@ -1,102 +1,39 @@
-# Prototype Honda
-
-Sistema completo de gerenciamento e análise de propostas Honda (Esse projeto é apenas para fins de estudo!).
-
-O projeto é composto por:
-
-* API principal (`prototype-honda-api`)
-* Frontend (`prototype-honda-web`)
-* API de cotações (`prototype-honda-quotation-api`)
-* MongoDB
+# Setup Automático - Prototype Honda
+(Esse projeto é apenas para fins de estudo!)
 
 # Autor
-
 Gabriel Maciel
 
----
+Sistema completo com:
 
-# Tecnologias
-
-## Backend
-
-* Java 26
-* Spring Boot 4
 * MongoDB
-* Mongock
-* Maven
+* API Principal
+* API Quotations
+* Frontend React
 
-## Frontend
-
-* React
-* Vite
-* TypeScript
-* CSS Modules
-* Recharts
-
-## Infraestrutura
-
-* Docker
-* Docker Compose
-* Podman
-* Nginx
+Tudo iniciado automaticamente via Docker ou Podman.
 
 ---
 
-# Estrutura dos projetos
+# Estrutura necessária
+
+Você precisará apenas de:
 
 ```text
 workspace/
-├── prototype-honda-api/
-├── prototype-honda-web/
-├── prototype-honda-quotation-api/
 └── docker-compose.yml
 ```
 
 ---
 
-# Repositórios
-
-## API Principal
-
-* https://github.com/gabrielgmaciel/prototype-honda-api
-
-## Frontend
-
-* https://github.com/gabrielgmaciel/prototype-honda-web
-
-## API de Cotações
-
-* https://github.com/gabrielgmaciel/prototype-honda-quotation-api
-
----
-
-# Banco de Dados
-
-MongoDB utilizado:
-
-```text
-mongodb://admin:senha123@localhost:27017/honda?authSource=admin
-```
-
----
-
-# Docker Compose
-
-Crie o arquivo:
-
-```text
-docker-compose.yml
-```
-
-na raiz do workspace.
-
-## docker-compose.yml
+# docker-compose.yml
 
 ```yaml
 services:
 
   mongo:
     image: mongo:8
+
     container_name: prototype-honda-mongo
 
     restart: always
@@ -114,8 +51,8 @@ services:
 
   prototype-honda-api:
     build:
-      context: ./prototype-honda-api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.api
 
     container_name: prototype-honda-api
 
@@ -133,8 +70,8 @@ services:
 
   prototype-honda-quotation-api:
     build:
-      context: ./prototype-honda-quotation-api
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.quotation
 
     container_name: prototype-honda-quotation-api
 
@@ -152,8 +89,8 @@ services:
 
   prototype-honda-web:
     build:
-      context: ./prototype-honda-web
-      dockerfile: Dockerfile
+      context: .
+      dockerfile: Dockerfile.web
 
     container_name: prototype-honda-web
 
@@ -172,88 +109,62 @@ volumes:
 
 ---
 
-# Dockerfile - API Principal
-
-Arquivo:
-
-```text
-prototype-honda-api/Dockerfile
-```
+# Dockerfile.api
 
 ```dockerfile
-FROM eclipse-temurin:26-jdk AS build
+FROM eclipse-temurin:26-jdk
 
 WORKDIR /app
 
-COPY . .
+RUN apt-get update && apt-get install -y git
+
+RUN git clone https://github.com/gabrielgmaciel/prototype-honda-api.git .
 
 RUN chmod +x mvnw
 
 RUN ./mvnw clean package -DskipTests
-
-FROM eclipse-temurin:26-jre
-
-WORKDIR /app
-
-COPY --from=build /app/target/*.jar app.jar
 
 EXPOSE 8080
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "target/prototype-honda-api-0.0.1-SNAPSHOT.jar"]
 ```
 
 ---
 
-# Dockerfile - API Quotations
-
-Arquivo:
-
-```text
-prototype-honda-quotation-api/Dockerfile
-```
+# Dockerfile.quotation
 
 ```dockerfile
-FROM eclipse-temurin:26-jdk AS build
+FROM eclipse-temurin:26-jdk
 
 WORKDIR /app
 
-COPY . .
+RUN apt-get update && apt-get install -y git
+
+RUN git clone https://github.com/gabrielgmaciel/prototype-honda-quotation-api.git .
 
 RUN chmod +x mvnw
 
 RUN ./mvnw clean package -DskipTests
 
-FROM eclipse-temurin:26-jre
-
-WORKDIR /app
-
-COPY --from=build /app/target/*.jar app.jar
-
 EXPOSE 8081
 
-ENTRYPOINT ["java", "-jar", "app.jar"]
+ENTRYPOINT ["java", "-jar", "target/prototype-honda-quotation-api-0.0.1-SNAPSHOT.jar"]
 ```
 
 ---
 
-# Dockerfile - Frontend
-
-Arquivo:
-
-```text
-prototype-honda-web/Dockerfile
-```
+# Dockerfile.web
 
 ```dockerfile
 FROM node:22-alpine AS build
 
 WORKDIR /app
 
-COPY package*.json ./
+RUN apk add --no-cache git
+
+RUN git clone https://github.com/gabrielgmaciel/prototype-honda-web.git .
 
 RUN npm install
-
-COPY . .
 
 RUN npm run build
 
@@ -268,64 +179,9 @@ CMD ["nginx", "-g", "daemon off;"]
 
 ---
 
-# Nginx Config (Opcional)
+# Como executar
 
-Arquivo:
-
-```text
-prototype-honda-web/nginx.conf
-```
-
-```nginx
-server {
-
-    listen 80;
-
-    server_name localhost;
-
-    root /usr/share/nginx/html;
-
-    index index.html;
-
-    location / {
-        try_files $uri $uri/ /index.html;
-    }
-}
-```
-
-Caso utilize:
-
-```dockerfile
-FROM nginx:stable-alpine
-
-COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-COPY --from=build /app/dist /usr/share/nginx/html
-```
-
----
-
-# application.properties
-
-## API Principal
-
-```properties
-spring.data.mongodb.uri=${SPRING_DATA_MONGODB_URI}
-server.port=${SERVER_PORT:8080}
-```
-
----
-
-## API Quotations
-
-```properties
-spring.data.mongodb.uri=${SPRING_DATA_MONGODB_URI}
-server.port=${SERVER_PORT:8081}
-```
-
----
-
-# Executando com Docker
+## Docker
 
 ```bash
 docker compose up --build
@@ -333,7 +189,7 @@ docker compose up --build
 
 ---
 
-# Executando com Podman
+## Podman
 
 ```bash
 podman compose up --build
@@ -367,82 +223,39 @@ http://localhost:8080
 http://localhost:8081
 ```
 
-## MongoDB
-
-```text
-mongodb://admin:senha123@localhost:27017/honda?authSource=admin
-```
-
 ---
 
-# Build individual
+# Vantagens desse setup
 
-## API Principal
-
-```bash
-docker build -t prototype-honda-api .
-```
-
-## Frontend
-
-```bash
-docker build -t prototype-honda-web .
-```
-
----
-
-# .dockerignore
-
-Crie em todos os projetos:
-
-```text
-node_modules
-
-dist
-
-build
-
-target
-
-.idea
-
-.git
-```
-
----
-
-# Parar containers
-
-```bash
-docker compose down
-```
-
-ou:
-
-```bash
-podman compose down
-```
+* Não precisa clonar nada manualmente
+* Tudo sobe automaticamente
+* Ambiente 100% reproduzível
+* Funciona em Docker e Podman
+* Ideal para demonstrações e portfólio
+* Fácil onboarding
+* Setup com apenas 1 comando
 
 ---
 
 # Observações
 
-## Spring Boot 4 + Java 26
+## Java
 
 O projeto utiliza:
 
 * Java 26
 * Spring Boot 4
-* Maven Wrapper
 
-As imagens Docker utilizadas:
+Imagem utilizada:
 
 ```text
 eclipse-temurin:26-jdk
-eclipse-temurin:26-jre
 ```
-
-já possuem suporte completo.
 
 ---
 
+# Banco Mongo
+
+```text
+mongodb://admin:senha123@localhost:27017/honda?authSource=admin
+```
