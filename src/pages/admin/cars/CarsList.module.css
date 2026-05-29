@@ -1,6 +1,6 @@
 .container {
   padding: 40px;
-  background: #f5f5f5;
+  background: #f5f7fb;
   min-height: 100vh;
   box-sizing: border-box;
 }
@@ -9,6 +9,11 @@
 
 .header {
   margin-bottom: 35px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 .header h1 {
@@ -22,12 +27,51 @@
   font-size: 15px;
 }
 
+/* ADD BUTTON */
+
+.addVehicleButton {
+  all: unset;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  height: 48px;
+
+  padding: 0 22px;
+
+  border-radius: 12px;
+
+  background: #111827;
+  color: white;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  cursor: pointer;
+
+  transition: 0.2s ease;
+
+  box-shadow:
+    0 4px 14px rgba(0,0,0,0.12);
+}
+
+.addVehicleButton:hover {
+  transform: translateY(-2px);
+
+  background: #000;
+}
+
 /* GRID */
 
 .grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 250px));
+
+  grid-template-columns:
+    repeat(auto-fit, minmax(240px, 260px));
+
   gap: 24px;
+
   justify-content: center;
 }
 
@@ -35,10 +79,16 @@
 
 .card {
   background: white;
+
   border-radius: 18px;
+
   overflow: hidden;
+
   transition: 0.25s;
-  box-shadow: 0 4px 20px rgba(0,0,0,0.06);
+
+  box-shadow:
+    0 4px 20px rgba(0,0,0,0.06);
+
   display: flex;
   flex-direction: column;
 }
@@ -97,40 +147,26 @@
 
 .editButton {
   width: 100%;
-  padding: 10px;
+
+  height: 44px;
+
   border: none;
-  border-radius: 10px;
-  background: #111;
+
+  border-radius: 12px;
+
+  background: #111827;
+
   color: white;
+
+  font-weight: 600;
+
   cursor: pointer;
+
+  transition: 0.2s;
 }
 
 .editButton:hover {
-  opacity: 0.9;
-}
-
-/* FOOTER */
-
-.footer {
-  margin-top: 40px;
-
-  display: flex;
-  justify-content: center;
-}
-
-/* ADD BUTTON */
-
-.addButton {
-  padding: 12px 20px;
-  border-radius: 10px;
-  border: none;
-  background: black;
-  color: white;
-  cursor: pointer;
-}
-
-.addButton:hover {
-  opacity: 0.9;
+  background: #000;
 }
 
 /* LOADING */
@@ -149,39 +185,24 @@
   background: #f5f5f5;
 }
 
-.footer {
-  margin-top: 40px;
-  display: flex;
-  justify-content: center;
-}
+/* RESPONSIVO */
 
-/* BOTÃO 100% ISOLADO */
-.addVehicleButton {
-  all: unset; /* 🔥 remove QUALQUER estilo herdado */
+@media (max-width: 700px) {
 
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+  .container {
+    padding: 20px;
+  }
 
-  padding: 14px 26px;
-  border-radius: 12px;
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 
-  background: #000;
-  color: #fff;
+  .addVehicleButton {
+    width: 100%;
+  }
 
-  font-size: 15px;
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: 0.2s ease;
-}
-
-.addVehicleButton:hover {
-  opacity: 0.85;
-  transform: translateY(-2px);
-}
-
-.addVehicleButton:active {
-  transform: translateY(0px);
+  .grid {
+    grid-template-columns: 1fr;
+  }
 }

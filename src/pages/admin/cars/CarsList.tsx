@@ -64,6 +64,15 @@ export function CarsList() {
           </p>
         </div>
 
+        <button
+          className={styles.addVehicleButton}
+          onClick={() =>
+            navigate("/admin/cars/create")
+          }
+        >
+          Adicionar veículo
+        </button>
+
       </div>
 
       <div className={styles.grid}>
@@ -103,19 +112,6 @@ export function CarsList() {
           </div>
 
         ))}
-
-      </div>
-
-      <div className={styles.footer}>
-
-        <button
-          className={styles.addVehicleButton}
-          onClick={() =>
-            navigate("/admin/cars/create")
-          }
-        >
-          Adicionar novo veículo
-        </button>
 
       </div>
 
