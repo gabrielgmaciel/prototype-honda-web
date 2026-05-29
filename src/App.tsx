@@ -10,6 +10,7 @@ import { Register } from "./pages/register/Register";
 import { UserProfile } from "./pages/userProfile/UserProfile";
 import { Users } from "./pages/admin/users/Users";
 import { Business } from "./pages/business/Business";
+import { Dashbord } from "./pages/admin/dashbord/Dashbord";
 
 export default function App() {
   const location = useLocation();
@@ -30,9 +31,14 @@ export default function App() {
           <Route path="/vehicle/view/:id" element={<VehicleView />} />
           <Route path="/profile" element={<UserProfile />} />
           <Route path="/business/:id" element={<Business />} />
-          
+
           {/* ADMIN */}
           <Route path="/admin" element={<AdminLayout />}>
+
+            <Route
+              path="dashboard"
+              element={<Dashbord />}
+            />
 
             <Route
               path="cars"

@@ -479,7 +479,7 @@ export function Navbar() {
 
                         setProfileOpen(false);
 
-                        navigate("/admin");
+                        navigate("/admin/dashboard");
                       }}
                     >
                       Admin
